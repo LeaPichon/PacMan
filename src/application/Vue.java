@@ -31,18 +31,15 @@ public class Vue extends Application
     	//initialisation du modèle
     	Model model = new Model();
     	
-    	//préparation des images
-    	GridPane gridpane = new GridPane();
-    	
+    	//préparation des images    	
     	Image wall = new Image("images/wall.png");
     	Image empty = new Image("images/empty.png");
     	Image pacman = new Image("images/pacman.png");
     	
-    	//tableau de cases graphiques
+    	//initialisaton de la grille et du tableau
     	grid = new Grid();
+    	GridPane gridpane = new GridPane();
     	ImageView[][] tabIV = new ImageView[grid.getIndexL()][grid.getIndexC()];
-    	
-    	// initialisation de la grille (sans image)
     	for(int i = 0; i < grid.getIndexL(); i++)
     	{
     		for(int j = 0; j < grid.getIndexC(); j++)
@@ -52,6 +49,7 @@ public class Vue extends Application
     				ImageView imgWall = new ImageView(wall);
     				imgWall.setFitHeight(30);
     		    	imgWall.setPreserveRatio(true);
+    		    	tabIV[i][j] = imgWall;
     				gridpane.add(imgWall, j, i);
     			}
     			else
@@ -59,6 +57,7 @@ public class Vue extends Application
     				ImageView imgEmpty = new ImageView(empty);
     				imgEmpty.setFitHeight(30);
     				imgEmpty.setPreserveRatio(true);
+    				tabIV[i][j] = imgEmpty;
     				gridpane.add(imgEmpty, j, i);
     			}
     		}
@@ -73,7 +72,16 @@ public class Vue extends Application
 	            { // rafraichissement graphique
 	                for (int j = 0; j < grid.getIndexC(); j++) 
 	                {
-	                    if(model.getPX() == i && model.getPY() == j)
+	                	if(grid.getCell(i, j) == true)
+	        			{
+	        		    	tabIV[i][j].setImage(wall);
+	        			}
+	        			else
+	        			{
+	        				tabIV[i][j].setImage(empty);
+	        			}
+	                	
+	                	if(model.getPX() == i && model.getPY() == j)
 	                    {
 	                    	tabIV[i][j].setImage(pacman);
 	                    }
@@ -81,32 +89,31 @@ public class Vue extends Application
 	                    {
 	                    	tab[i][j]=.setImage(imFA);
 	                   	}*/
-	                	else 
-	                	{
-	                		tabIV[i][j].setImage(empty);
-	                	}
 	                }
 	            } 
 	        }
 	    };
 	    
 	    model.addObserver(obs);
-	    //model.start();
+	    model.start();
 	    
 	    root.getChildren().add(gridpane);
 	    stage.setScene(scene);
 	    stage.show();
 	    
-	    /*root.setOnKeyPressed(new EventHandler<javafx.scene.input.KeyEvent>() { // on Ã©coute le clavier
+	    root.setOnKeyPressed(new EventHandler<javafx.scene.input.KeyEvent>() // on écoute le clavier
+	    { 
 	    	@Override
-            public void handle(javafx.scene.input.KeyEvent event) {
-                if (event.isShiftDown()) {
-                    spm.initXY(); // si on clique sur shift, on remet spm en haut Ã  gauche
+            public void handle(javafx.scene.input.KeyEvent event) 
+	    	{
+                if (event.isShiftDown()) 
+                {
+                    //model.initXY(); // si on clique sur shift, on remet pm en haut à gauche
                 }
             }
         });
         
-        grid.requestFocus();*/
+        gridpane.requestFocus();
     }
    
     public static void main(String[] args) 

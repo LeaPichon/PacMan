@@ -12,29 +12,16 @@ import lib.Pacman;
 
 public class Model extends Observable implements Runnable 
 {
-	int x, y;
     private Grid grid;
     private Pacman pacman;
     //private Fantom fantom;
     
     Random rand = new Random();
     
-    
     public Model() 
     {
-        x = 0; 
-        y = 0;
-    }
-    
-    
-    public int getX()
-    {
-    	return x;
-    }
-    
-    public int getY()
-    {
-    	return y;
+        grid = new Grid();
+        pacman = new Pacman();
     }
     
     public int getPX() 
@@ -55,11 +42,6 @@ public class Model extends Observable implements Runnable
 	    //return Fantom.gety();
 	//}
     
-    public void initXY() {
-        x = 0;
-        y = 0;
-    }
-    
     public void start() 
     {
         new Thread(this).start();
@@ -69,23 +51,21 @@ public class Model extends Observable implements Runnable
     public void run() 
     {
         while(true) 
-        { 
-        	// pm descent dans la grille à chaque pas de temps
-        	int deltaX = 0;
-        	int deltaY = 0;
+        {
            
         	// A la place de l'aléatoire, écouter le clavier.
-        	/*if(grid.getCell(deltaX, deltaY) == true)
-        	{
-        		deltaX = rand.nextInt(grid.getIndexL());
-            	deltaY = rand.nextInt(grid.getIndexC());
-        	}*/
-
-        	if (grid.getCell(x + deltaX, y + deltaY) == false) 
-        	{
-        		x += deltaX;
-        		y += deltaY;
-        	}           
+        	int x = getPX();
+        	int y = getPY();
+        	
+        	 int deltaX = rand.nextInt(2);
+             int deltaY = rand.nextInt(2);
+             
+             if (!grid.getCell(x + deltaX, y + deltaY)) 
+             {
+                 pacman.setX(x + deltaX);
+                 pacman.setY(y + deltaY);
+                 System.out.println("1");
+             }      
            
         	setChanged(); 
         	notifyObservers(); // notification de l'observer
