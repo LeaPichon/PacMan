@@ -47,25 +47,47 @@ public class Model extends Observable implements Runnable
         new Thread(this).start();
     }
     
+    void deplacer(String dir)
+    {
+    	switch(dir)
+    	{
+	    	case "z" :
+	    		if (!grid.getCell(pacman.getX()-1, pacman.getY()))
+	    			pacman.setX(pacman.getX()-1);
+	    		break;
+	    	case "s" :
+	    		if (!grid.getCell(pacman.getX()+1, pacman.getY())) 
+	    			pacman.setX(pacman.getX()+1);
+	    		break;
+	    	case "q" :
+	    		if (!grid.getCell(pacman.getX(), pacman.getY()-1)) 
+	    			pacman.setY(pacman.getY()-1);
+	    		break;
+	    	case "d" :
+	    		if (!grid.getCell(pacman.getX(), pacman.getY()+1)) 
+	    			pacman.setY(pacman.getY()+1);
+	    		break;
+	    	default:
+	    		break;
+    	}
+    }
+    
     @Override
     public void run() 
     {
         while(true) 
         {
-           
-        	// A la place de l'aléatoire, écouter le clavier.
-        	int x = getPX();
-        	int y = getPY();
+        	//int x = getPX();
+        	//int y = getPY();
         	
-        	 int deltaX = rand.nextInt(2);
-             int deltaY = rand.nextInt(2);
+        	 //int deltaX = rand.nextInt(2);
+             //int deltaY = rand.nextInt(2);
              
-             if (!grid.getCell(x + deltaX, y + deltaY)) 
-             {
-                 pacman.setX(x + deltaX);
-                 pacman.setY(y + deltaY);
-                 System.out.println("1");
-             }      
+            // if (!grid.getCell(x + deltaX, y + deltaY)) 
+             //{
+              //   pacman.setX(x + deltaX);
+               //  pacman.setY(y + deltaY);
+             //}      
            
         	setChanged(); 
         	notifyObservers(); // notification de l'observer
@@ -78,9 +100,6 @@ public class Model extends Observable implements Runnable
            {
                Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
            }
-           
         }
-    
     }
-	
 }

@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -64,27 +65,21 @@ public class Vue extends Application
     	}
     	
 	    Observer obs = new Observer() 
-	    { // l'observer observe l'obervable (update est exécuté dans notifyObservers() est appelé modèle )
+	    {
 	        @Override
 	        public void update(Observable obs, Object arg) 
 	        {
-	            for (int i = 0; i < grid.getIndexL(); i++) 
-	            { // rafraichissement graphique
+	            for (int i = 0; i < grid.getIndexL(); i++) // rafraichissement graphique
+	            { 
 	                for (int j = 0; j < grid.getIndexC(); j++) 
 	                {
 	                	if(grid.getCell(i, j) == true)
-	        			{
 	        		    	tabIV[i][j].setImage(wall);
-	        			}
 	        			else
-	        			{
 	        				tabIV[i][j].setImage(empty);
-	        			}
 	                	
 	                	if(model.getPX() == i && model.getPY() == j)
-	                    {
 	                    	tabIV[i][j].setImage(pacman);
-	                    }
 	                    /*if(spm.getFX() == i && spm.getFY()==j) 
 	                    {
 	                    	tab[i][j]=.setImage(imFA);
@@ -106,13 +101,21 @@ public class Vue extends Application
 	    	@Override
             public void handle(javafx.scene.input.KeyEvent event) 
 	    	{
-                if (event.isShiftDown()) 
-                {
-                    //model.initXY(); // si on clique sur shift, on remet pm en haut à gauche
+	    		if (event.getCode().equals(KeyCode.Z)) {
+                    model.deplacer("z");
+                }
+	    		if (event.getCode().equals(KeyCode.Q)) {
+	    			model.deplacer("q");
+                }
+	    		if (event.getCode().equals(KeyCode.S)) {
+	    			model.deplacer("s");
+                }
+	    		if (event.getCode().equals(KeyCode.D)) {
+	    			model.deplacer("d");
                 }
             }
         });
-        
+	    
         gridpane.requestFocus();
     }
    
