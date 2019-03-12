@@ -54,45 +54,38 @@ public class Model extends Observable implements Runnable
 	//public int FgetY() {
 	    //return Fantom.gety();
 	//}
-    /*
-    public void start() {
-        new Thread(this).start();
-    }*/
     
     public void initXY() {
         x = 0;
         y = 0;
     }
     
-    /*public void start() 
+    public void start() 
     {
         new Thread(this).start();
-    }*/
+    }
     
     @Override
     public void run() 
     {
-        /*while(true) 
+        while(true) 
         { 
-        	// spm descent dans la grille à chaque pas de temps
-        	int deltaX = rand.nextInt(grid.getIndexL());
-        	int deltaY = rand.nextInt(grid.getIndexC());
+        	// pm descent dans la grille à chaque pas de temps
+        	int deltaX = 0;
+        	int deltaY = 0;
            
-        	if(grid.getCell(deltaX, deltaY) == true)
+        	// A la place de l'aléatoire, écouter le clavier.
+        	/*if(grid.getCell(deltaX, deltaY) == true)
         	{
         		deltaX = rand.nextInt(grid.getIndexL());
             	deltaY = rand.nextInt(grid.getIndexC());
-        	}
-        	// Changer le if pour gérer la collision avec les murs
-        	if (x + deltaX > 0 && x + deltaX < sizeX) {
+        	}*/
+
+        	if (grid.getCell(x + deltaX, y + deltaY) == false) 
+        	{
         		x += deltaX;
-        	}
-           
-        	if (y + deltaY > 0 && y + deltaY < sizeX) {
         		y += deltaY;
-        	} 
-           
-        	//System.out.println(x + " - " + y);
+        	}           
            
         	setChanged(); 
         	notifyObservers(); // notification de l'observer
@@ -106,7 +99,7 @@ public class Model extends Observable implements Runnable
                Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
            }
            
-        }*/
+        }
     
     }
 	
