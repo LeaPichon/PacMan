@@ -60,11 +60,15 @@ public class Model extends Observable implements Runnable
 	    			pacman.setX(pacman.getX()+1);
 	    		break;
 	    	case "q" :
-	    		if (!grid.getCell(pacman.getX(), pacman.getY()-1)) 
+	    		if(pacman.getX() == 9 && pacman.getY() == 0)
+	    			pacman.setY(26);
+	    		else if (!grid.getCell(pacman.getX(), pacman.getY()-1)) 
 	    			pacman.setY(pacman.getY()-1);
 	    		break;
 	    	case "d" :
-	    		if (!grid.getCell(pacman.getX(), pacman.getY()+1)) 
+	    		if(pacman.getX() == 9 && pacman.getY() == 26)
+	    			pacman.setY(0);
+	    		else if (!grid.getCell(pacman.getX(), pacman.getY()+1)) 
 	    			pacman.setY(pacman.getY()+1);
 	    		break;
 	    	default:
@@ -88,7 +92,6 @@ public class Model extends Observable implements Runnable
               //   pacman.setX(x + deltaX);
                //  pacman.setY(y + deltaY);
              //}      
-           
         	setChanged(); 
         	notifyObservers(); // notification de l'observer
            
