@@ -1,19 +1,13 @@
 package lib;
 
-
-import javax.swing.JPanel;
-
-public class Entity extends JPanel 
+public class Entity
 {
-	private String name;
-	private int x, y;
+	private int x;
+	private int y;
 	
 	public Entity()
 	{
-		super();
-		this.name ="test";
-		this.x = 1;
-		this.y = 1;
+		
 	}
 
 }

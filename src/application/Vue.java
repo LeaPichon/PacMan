@@ -36,6 +36,10 @@ public class Vue extends Application
     	Image wall = new Image("images/wall.png");
     	Image empty = new Image("images/empty.png");
     	Image pacman = new Image("images/pacman.png");
+    	Image ghost1 = new Image("images/ghost1.png");
+    	Image ghost2 = new Image("images/ghost2.png");
+    	Image ghost3 = new Image("images/ghost3.png");
+    	Image ghost4 = new Image("images/ghost4.png");
     	
     	//initialisaton de la grille et du tableau
     	grid = new Grid();
@@ -80,10 +84,14 @@ public class Vue extends Application
 	                	
 	                	if(model.getPX() == i && model.getPY() == j)
 	                    	tabIV[i][j].setImage(pacman);
-	                    /*if(spm.getFX() == i && spm.getFY()==j) 
-	                    {
-	                    	tab[i][j]=.setImage(imFA);
-	                   	}*/
+	                    if(model.getGX1() == i && model.getGY1()==j)
+	                    	tabIV[i][j].setImage(ghost1);
+	                    if(model.getGX2() == i && model.getGY2()==j)
+	                    	tabIV[i][j].setImage(ghost2);
+	                    if(model.getGX3() == i && model.getGY3()==j)
+	                    	tabIV[i][j].setImage(ghost3);
+	                    if(model.getGX4() == i && model.getGY4()==j)
+	                    	tabIV[i][j].setImage(ghost4);
 	                }
 	            } 
 	        }

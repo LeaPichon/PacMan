@@ -1,11 +1,11 @@
 package application;
 
-import java.awt.Color;
 import java.util.Observable;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import lib.Ghost;
 import lib.Grid;
 import lib.Pacman;
 
@@ -14,7 +14,10 @@ public class Model extends Observable implements Runnable
 {
     private Grid grid;
     private Pacman pacman;
-    //private Fantom fantom;
+    private Ghost ghost1;
+    private Ghost ghost2;
+    private Ghost ghost3;
+    private Ghost ghost4;
     
     Random rand = new Random();
     
@@ -22,6 +25,10 @@ public class Model extends Observable implements Runnable
     {
         grid = new Grid();
         pacman = new Pacman();
+        ghost1 = new Ghost();
+        ghost2 = new Ghost();
+        ghost3 = new Ghost();
+        ghost4 = new Ghost();
     }
     
     public int getPX() 
@@ -34,13 +41,58 @@ public class Model extends Observable implements Runnable
         return pacman.getY();
     }
     
-	//public int FgetX() {
-	    //return Fantom.getx();
-	//}
+    public int getGX1() 
+    {
+        return ghost1.getX();
+    }
+    
+    public int getGY1() 
+    {
+        return ghost1.getY();
+    }
+    public int getGX2() 
+    {
+        return ghost2.getX();
+    }
+    
+    public int getGY2() 
+    {
+        return ghost2.getY();
+    }
+    public int getGX3() 
+    {
+        return ghost3.getX();
+    }
+    
+    public int getGY3() 
+    {
+        return ghost3.getY();
+    }
+    public int getGX4() 
+    {
+        return ghost4.getX();
+    }
+    
+    public int getGY4() 
+    {
+        return ghost4.getY();
+    }
+    
+	public void initGhosts() 
+	{
+	    ghost1.setY(11);
+	    ghost2.setY(12);
+	    ghost3.setY(14);
+	    ghost4.setY(15);
+	}
 	
-	//public int FgetY() {
-	    //return Fantom.gety();
-	//}
+	public void moveGhostsRandom()
+	{
+    	ghost1.moveGhostRandom();
+    	ghost2.moveGhostRandom();
+		ghost3.moveGhostRandom();
+		ghost4.moveGhostRandom();
+	}
     
     public void start() 
     {
@@ -60,13 +112,13 @@ public class Model extends Observable implements Runnable
 	    			pacman.setX(pacman.getX()+1);
 	    		break;
 	    	case "q" :
-	    		if(pacman.getX() == 9 && pacman.getY() == 0)
+	    		if (pacman.getX() == 9 && pacman.getY() == 0)
 	    			pacman.setY(26);
 	    		else if (!grid.getCell(pacman.getX(), pacman.getY()-1)) 
 	    			pacman.setY(pacman.getY()-1);
 	    		break;
 	    	case "d" :
-	    		if(pacman.getX() == 9 && pacman.getY() == 26)
+	    		if (pacman.getX() == 9 && pacman.getY() == 26)
 	    			pacman.setY(0);
 	    		else if (!grid.getCell(pacman.getX(), pacman.getY()+1)) 
 	    			pacman.setY(pacman.getY()+1);
@@ -81,17 +133,8 @@ public class Model extends Observable implements Runnable
     {
         while(true) 
         {
-        	//int x = getPX();
-        	//int y = getPY();
-        	
-        	 //int deltaX = rand.nextInt(2);
-             //int deltaY = rand.nextInt(2);
-             
-            // if (!grid.getCell(x + deltaX, y + deltaY)) 
-             //{
-              //   pacman.setX(x + deltaX);
-               //  pacman.setY(y + deltaY);
-             //}      
+        	this.initGhosts();
+            this.moveGhostsRandom();  
         	setChanged(); 
         	notifyObservers(); // notification de l'observer
            
