@@ -36,35 +36,37 @@ public class Ghost extends Entity
 		this.y = y;
 	}
 	
-	public void moveGhostRandom()
+	public void moveGhostRandom() //à changer, le fantôme ne bouge pas
 	{
-		int n = rand.nextInt(4);
+		int deltaX = rand.nextInt(2);
+		int deltaY = rand.nextInt(2);
+		int sensX = rand.nextInt(2);
+		int sensY = rand.nextInt(2);
 		grid = new Grid();
 		
-		switch(n)
-	    {
-	        case 0 :
-	        	if (!grid.getCell(x - 1, y))
-	        		setX(x - 1);
-	        	break;
-	        case 1 :
-	        	if (x == 9 && y == 26)
-	        		setY(0);
-	        	else if (!grid.getCell(x, y + 1)) 
-	        		setY(y + 1);
-	        	break;
-	        case 2 :
-	        	if (!grid.getCell(x + 1, y))
-	        		setX(x + 1);
-	        	break;
-	        case 3 :
-	        	if (x == 9 && y == 0)
-	        		setY(26);
-	        	else if (!grid.getCell(x, y - 1)) 
-	        		setY(y - 1);
-	        	break;
-	        default:
-	        	break;
-	    }
+        if(sensX == 0 && sensY == 0)
+        	if(!grid.getCell(x + deltaX, y + deltaY))
+	        {
+	        	x += deltaX;
+	        	y += deltaY;
+	        }
+        if(sensX == 0 && sensY == 1)
+        	if(!grid.getCell(x + deltaX, y - deltaY))
+	        {
+	        	x += deltaX;
+	        	y -= deltaY;
+	        }
+        if(sensX == 1 && sensY == 0)
+        	if(!grid.getCell(x - deltaX, y + deltaY))
+	        {
+	        	x -= deltaX;
+	        	y += deltaY;
+	        }
+        if(sensX == 1 && sensY == 1)
+        	if(!grid.getCell(x - deltaX, y - deltaY))
+	        {
+	        	x -= deltaX;
+	        	y -= deltaY;
+	        }
 	}
 }

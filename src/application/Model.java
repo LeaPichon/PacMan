@@ -25,10 +25,10 @@ public class Model extends Observable implements Runnable
     {
         grid = new Grid();
         pacman = new Pacman();
-        ghost1 = new Ghost();
+        /*ghost1 = new Ghost();
         ghost2 = new Ghost();
         ghost3 = new Ghost();
-        ghost4 = new Ghost();
+        ghost4 = new Ghost();*/
     }
     
     public int getPX() 
@@ -85,6 +85,28 @@ public class Model extends Observable implements Runnable
 	    ghost3.setY(14);
 	    ghost4.setY(15);
 	}
+
+	public void getGhostsOut() //à améliorer !
+	{
+		ghost2.setY(13);
+	    ghost2.setX(8);
+	    ghost2.setX(7);
+    	ghost2.moveGhostRandom();
+    	ghost3.setY(13);
+	    ghost3.setX(8);
+	    ghost3.setX(7);
+    	ghost3.moveGhostRandom();		
+    	ghost1.setY(12);		
+    	ghost1.setY(13);
+	    ghost1.setX(8);
+	    ghost1.setX(7);
+    	ghost1.moveGhostRandom();
+	    ghost4.setY(12);		
+    	ghost4.setY(13);
+	    ghost4.setX(8);
+	    ghost4.setX(7);
+    	ghost4.moveGhostRandom();
+	}
 	
 	public void moveGhostsRandom()
 	{
@@ -133,8 +155,9 @@ public class Model extends Observable implements Runnable
     {
         while(true) 
         {
-        	this.initGhosts();
-            this.moveGhostsRandom();  
+        	//this.initGhosts();
+        	//this.moveGhostsRandom();
+            //this.getGhostsOut();
         	setChanged(); 
         	notifyObservers(); // notification de l'observer
            

@@ -40,11 +40,14 @@ public class Vue extends Application
     	Image ghost2 = new Image("images/ghost2.png");
     	Image ghost3 = new Image("images/ghost3.png");
     	Image ghost4 = new Image("images/ghost4.png");
+    	Image pacgomme = new Image("images/pacgomme.png");
+    	Image superpacgomme = new Image("images/superpacgomme.png");
     	
-    	//initialisaton de la grille et du tableau
+    	//initialisaton de la grille et des tableaux
     	grid = new Grid();
     	GridPane gridpane = new GridPane();
     	ImageView[][] tabIV = new ImageView[grid.getIndexL()][grid.getIndexC()];
+    	int[][] tabEmpty = new int[grid.getIndexL()][grid.getIndexC()];
     	for(int i = 0; i < grid.getIndexL(); i++)
     	{
     		for(int j = 0; j < grid.getIndexC(); j++)
@@ -59,11 +62,12 @@ public class Vue extends Application
     			}
     			else
     			{
-    				ImageView imgEmpty = new ImageView(empty);
-    				imgEmpty.setFitHeight(30);
-    				imgEmpty.setPreserveRatio(true);
-    				tabIV[i][j] = imgEmpty;
-    				gridpane.add(imgEmpty, j, i);
+    				ImageView imgPacGomme = new ImageView(pacgomme);
+    				imgPacGomme.setFitHeight(30);
+    				imgPacGomme.setPreserveRatio(true);
+    				tabIV[i][j] = imgPacGomme;
+    				tabEmpty[i][j] = 0;
+    				gridpane.add(imgPacGomme, j, i);
     			}
     		}
     	}
@@ -73,27 +77,35 @@ public class Vue extends Application
 	        @Override
 	        public void update(Observable obs, Object arg) 
 	        {
+	        	
 	            for (int i = 0; i < grid.getIndexL(); i++) // rafraichissement graphique
 	            { 
 	                for (int j = 0; j < grid.getIndexC(); j++) 
 	                {
 	                	if(grid.getCell(i, j) == true)
 	        		    	tabIV[i][j].setImage(wall);
-	        			else
-	        				tabIV[i][j].setImage(empty);
+	        			/*else if ((i == 1 && j == 3) || (i == 25 && j == 3) || (i == 1 && j == 14) || (i == 25 && j == 14)) //a refaire (coordonnées dans SuperPacGomme ?)
+	        				tabIV[i][j].setImage(superpacgomme);*/
+	                	else if (tabEmpty[i][j] == 1)
+	                		tabIV[i][j].setImage(empty);
+	                	else
+	        				tabIV[i][j].setImage(pacgomme);
 	                	
 	                	if(model.getPX() == i && model.getPY() == j)
-	                    	tabIV[i][j].setImage(pacman);
-	                    if(model.getGX1() == i && model.getGY1()==j)
+	                	{
+	                		tabIV[i][j].setImage(pacman);
+	                		tabEmpty[i][j] = 1;
+	                	}
+	                    /*if(model.getGX1() == i && model.getGY1()==j)
 	                    	tabIV[i][j].setImage(ghost1);
 	                    if(model.getGX2() == i && model.getGY2()==j)
 	                    	tabIV[i][j].setImage(ghost2);
 	                    if(model.getGX3() == i && model.getGY3()==j)
 	                    	tabIV[i][j].setImage(ghost3);
 	                    if(model.getGX4() == i && model.getGY4()==j)
-	                    	tabIV[i][j].setImage(ghost4);
+	                    	tabIV[i][j].setImage(ghost4);*/
 	                }
-	            } 
+	            }
 	        }
 	    };
 	    
