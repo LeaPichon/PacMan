@@ -84,8 +84,8 @@ public class Vue extends Application
 	                {
 	                	if(grid.getCell(i, j) == true)
 	        		    	tabIV[i][j].setImage(wall);
-	        			/*else if ((i == 1 && j == 3) || (i == 25 && j == 3) || (i == 1 && j == 14) || (i == 25 && j == 14)) //a refaire (coordonnées dans SuperPacGomme ?)
-	        				tabIV[i][j].setImage(superpacgomme);*/
+	        			else if ((i == 1 && j == 3) || (i == 25 && j == 3) || (i == 1 && j == 14) || (i == 25 && j == 14)) //a refaire (coordonnées dans SuperPacGomme ?)
+	        				tabIV[i][j].setImage(superpacgomme);
 	                	else if (tabEmpty[i][j] == 1)
 	                		tabIV[i][j].setImage(empty);
 	                	else
@@ -96,14 +96,14 @@ public class Vue extends Application
 	                		tabIV[i][j].setImage(pacman);
 	                		tabEmpty[i][j] = 1;
 	                	}
-	                    /*if(model.getGX1() == i && model.getGY1()==j)
+	                    if(model.getGX1() == i && model.getGY1()==j)
 	                    	tabIV[i][j].setImage(ghost1);
 	                    if(model.getGX2() == i && model.getGY2()==j)
 	                    	tabIV[i][j].setImage(ghost2);
 	                    if(model.getGX3() == i && model.getGY3()==j)
 	                    	tabIV[i][j].setImage(ghost3);
 	                    if(model.getGX4() == i && model.getGY4()==j)
-	                    	tabIV[i][j].setImage(ghost4);*/
+	                    	tabIV[i][j].setImage(ghost4);
 	                }
 	            }
 	        }
@@ -122,16 +122,16 @@ public class Vue extends Application
             public void handle(javafx.scene.input.KeyEvent event) 
 	    	{
 	    		if (event.getCode().equals(KeyCode.Z)) {
-                    model.deplacer("z");
+                    model.setdir("z");
                 }
 	    		if (event.getCode().equals(KeyCode.Q)) {
-	    			model.deplacer("q");
+	    			model.setdir("q");
                 }
 	    		if (event.getCode().equals(KeyCode.S)) {
-	    			model.deplacer("s");
+	    			model.setdir("s");
                 }
 	    		if (event.getCode().equals(KeyCode.D)) {
-	    			model.deplacer("d");
+	    			model.setdir("d");
                 }
             }
         });

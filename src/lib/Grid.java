@@ -79,4 +79,25 @@ public class Grid {
 		return grid[i][j];
 	}
 	
+	void possibilite(Ghost ghost)
+    {
+		boolean[] dummy = new boolean[4];
+		if (!this.getCell(ghost.getX()-1, ghost.getY()))
+			dummy[0]=true;
+		else dummy[0]=false;
+	
+		if (!this.getCell(ghost.getX()+1, ghost.getY())) 
+			dummy[1]=true;
+		else dummy[1]=false;
+	
+		if (!this.getCell(ghost.getX(), ghost.getY()-1)) 
+			dummy[2]=true;
+		else dummy[2]=false;
+	
+		 if (!this.getCell(ghost.getX(), ghost.getY()+1)) 
+			dummy[3]=true;
+		 else dummy[3]=false;
+		 ghost.setPossibility(dummy);
+    }
+	
 }

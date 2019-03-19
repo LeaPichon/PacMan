@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import lib.Ghost;
 import lib.Grid;
 import lib.Pacman;
+import lib.Direction;
 
 
 public class Model extends Observable implements Runnable 
@@ -19,16 +20,19 @@ public class Model extends Observable implements Runnable
     private Ghost ghost3;
     private Ghost ghost4;
     
+    private Direction lastdir;
+    
     Random rand = new Random();
     
     public Model() 
     {
         grid = new Grid();
         pacman = new Pacman();
-        /*ghost1 = new Ghost();
-        ghost2 = new Ghost();
-        ghost3 = new Ghost();
-        ghost4 = new Ghost();*/
+        lastdir=Direction.debut;
+        ghost1 = new Ghost(grid);
+        ghost2 = new Ghost(grid);
+        ghost3 = new Ghost(grid);
+        ghost4 = new Ghost(grid);
     }
     
     public int getPX() 
@@ -80,13 +84,17 @@ public class Model extends Observable implements Runnable
     
 	public void initGhosts() 
 	{
-	    ghost1.setY(11);
+	    ghost1.setY(9);
+	    ghost2.setX(11);
 	    ghost2.setY(12);
+	    ghost3.setX(7);
 	    ghost3.setY(14);
-	    ghost4.setY(15);
+	    ghost4.setY(17);
 	}
 
-	public void getGhostsOut() //à améliorer !
+	/*
+	 public void getGhostsOut() //à améliorer !
+	 
 	{
 		ghost2.setY(13);
 	    ghost2.setX(8);
@@ -108,6 +116,7 @@ public class Model extends Observable implements Runnable
     	ghost4.moveGhostRandom();
 	}
 	
+	*/
 	public void moveGhostsRandom()
 	{
     	ghost1.moveGhostRandom();
@@ -121,25 +130,48 @@ public class Model extends Observable implements Runnable
         new Thread(this).start();
     }
     
-    void deplacer(String dir)
+    
+    void setdir(String dir)
     {
     	switch(dir)
     	{
-	    	case "z" :
+    		case "z" : 
+    			lastdir=Direction.haut;
+    			break;
+    		case "s" :
+    			lastdir=Direction.bas;
+    			break;
+    		case "q" :
+    			lastdir=Direction.gauche;
+    			break;
+    		case "d" :
+    			lastdir=Direction.droite;
+    			break;
+    		
+    	}
+    	
+    	
+    }
+    
+    void deplacer()
+    {
+    	switch(lastdir)
+    	{
+	    	case haut :
 	    		if (!grid.getCell(pacman.getX()-1, pacman.getY()))
 	    			pacman.setX(pacman.getX()-1);
-	    		break;
-	    	case "s" :
+	    			break;
+	    	case bas :
 	    		if (!grid.getCell(pacman.getX()+1, pacman.getY())) 
 	    			pacman.setX(pacman.getX()+1);
 	    		break;
-	    	case "q" :
+	    	case gauche :
 	    		if (pacman.getX() == 9 && pacman.getY() == 0)
 	    			pacman.setY(26);
 	    		else if (!grid.getCell(pacman.getX(), pacman.getY()-1)) 
 	    			pacman.setY(pacman.getY()-1);
 	    		break;
-	    	case "d" :
+	    	case droite :
 	    		if (pacman.getX() == 9 && pacman.getY() == 26)
 	    			pacman.setY(0);
 	    		else if (!grid.getCell(pacman.getX(), pacman.getY()+1)) 
@@ -150,14 +182,94 @@ public class Model extends Observable implements Runnable
     	}
     }
     
+    void deplacerGhost(Ghost ghost)
+    {
+    	Direction dir=ghost.getdir();
+    	switch(dir)
+    	{
+	    	case haut :
+	    		if (!grid.getCell(ghost.getX()-1, ghost.getY()))
+	    			ghost.setX(ghost.getX()-1);
+	    			break;
+	    	case bas :
+	    		if (!grid.getCell(ghost.getX()+1, ghost.getY())) 
+	    			ghost.setX(ghost.getX()+1);
+	    		break;
+	    	case gauche :
+	    		if (ghost.getX() == 9 && ghost.getY() == 0)
+	    			ghost.setY(26);
+	    		else if (!grid.getCell(ghost.getX(), ghost.getY()-1)) 
+	    			ghost.setY(ghost.getY()-1);
+	    		break;
+	    	case droite :
+	    		if (ghost.getX() == 9 && ghost.getY() == 26)
+	    			ghost.setY(0);
+	    		else if (!grid.getCell(ghost.getX(), ghost.getY()+1)) 
+	    			ghost.setY(ghost.getY()+1);
+	    		break;
+	    	default:
+	    		break;
+    	}
+    	
+    }
+    
+    boolean detectionMur(Ghost ghost)
+    {
+    	Direction dir=ghost.getdir();
+    	switch(dir)
+    	{
+	    	case haut :
+	    		if (!grid.getCell(ghost.getX()-1, ghost.getY()))
+	    			return true;
+	    		else return false;
+	    	case bas :
+	    		if (!grid.getCell(ghost.getX()+1, ghost.getY())) 
+	    			return true;
+	    		else return false;
+	    	case gauche :
+	    		if (!grid.getCell(ghost.getX(), ghost.getY()-1)) 
+	    			return true;
+	    		else return false;
+	    	case droite :
+	    		 if (!grid.getCell(ghost.getX(), ghost.getY()+1)) 
+	    			return true;
+	    		 else return false;
+	    	default:
+	    		return true;
+    	}
+    }
+    
     @Override
     public void run() 
     {
+    	int compt = 8;
         while(true) 
         {
-        	//this.initGhosts();
-        	//this.moveGhostsRandom();
+        	this.initGhosts();
+        	
+        	compt--;
+        	if(compt==0)
+        	{
+        		ghost1.moveGhostRandom();
+        		while(!this.detectionMur(ghost1)) ghost1.moveGhostRandom();
+        			
+        		ghost2.moveGhostRandom();
+        		while(!this.detectionMur(ghost2)) ghost2.moveGhostRandom();
+        			
+        		ghost3.moveGhostRandom();
+        		while(!this.detectionMur(ghost3)) ghost3.moveGhostRandom();
+        			
+        		ghost4.moveGhostRandom();
+        		while(!this.detectionMur(ghost4)) ghost4.moveGhostRandom();
+        		compt=8;
+        	}
             //this.getGhostsOut();
+        	//System.out.println(lastdir);
+        	deplacer();
+        	this.deplacerGhost(ghost1);
+    		this.deplacerGhost(ghost2);
+    		this.deplacerGhost(ghost3);
+    		this.deplacerGhost(ghost4);
         	setChanged(); 
         	notifyObservers(); // notification de l'observer
            
