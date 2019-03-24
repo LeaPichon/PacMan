@@ -24,15 +24,15 @@ public class Vue extends Application
     @Override
     public void start(Stage stage) 
     {
-    	//initialisation de la fenêtre
+    	
     	stage.setTitle("Pacman");
     	StackPane root = new StackPane();
     	Scene scene = new Scene(root, 810, 630, Color.WHITE);
     	
-    	//initialisation du modèle
+    	//initialisation du modï¿½le
     	Model model = new Model();
     	
-    	//préparation des images    	
+    	//prï¿½paration des images    	
     	Image wall = new Image("images/wall.png");
     	Image empty = new Image("images/empty.png");
     	Image pacman = new Image("images/pacman.png");
@@ -84,7 +84,7 @@ public class Vue extends Application
 	                {
 	                	if(grid.getCell(i, j) == true)
 	        		    	tabIV[i][j].setImage(wall);
-	        			else if ((i == 1 && j == 3) || (i == 25 && j == 3) || (i == 1 && j == 14) || (i == 25 && j == 14)) //a refaire (coordonnées dans SuperPacGomme ?)
+	        			else if ((i == 1 && j == 3) || (i == 25 && j == 3) || (i == 1 && j == 14) || (i == 25 && j == 14)) //a refaire (coordonnï¿½es dans SuperPacGomme ?)
 	        				tabIV[i][j].setImage(superpacgomme);
 	                	else if (tabEmpty[i][j] == 1)
 	                		tabIV[i][j].setImage(empty);
@@ -116,7 +116,7 @@ public class Vue extends Application
 	    stage.setScene(scene);
 	    stage.show();
 	    
-	    root.setOnKeyPressed(new EventHandler<javafx.scene.input.KeyEvent>() // on écoute le clavier
+	    root.setOnKeyPressed(new EventHandler<javafx.scene.input.KeyEvent>() // on ï¿½coute le clavier
 	    { 
 	    	@Override
             public void handle(javafx.scene.input.KeyEvent event) 

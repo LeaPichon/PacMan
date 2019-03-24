@@ -72,10 +72,10 @@ public class Modele extends Observable implements Runnable
     {
         while(true) 
         { 
-        	// spm descend dans la grille à chaque pas de temps
+        	// spm descend dans la grille chaque pas de temps
 	        int deltaX = r.nextInt(2);
 			
-	        // Changer le if pour gérer la collision avec les murs
+	        // Changer le if pour grer la collision avec les murs
 			if (x + deltaX > 0 && x + deltaX < sizeX) 
 			{
 				x += deltaX;

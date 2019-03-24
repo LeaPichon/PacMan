@@ -50,6 +50,10 @@ public class Ghost extends Entity
 		return lastdir;
 	}
 	
+        public boolean[] getPossibility()
+        {
+            return possibility;
+        }
 	public void setPossibility(boolean[] result)
 	{
 		for(int i=0; i<4; i++)
@@ -68,7 +72,7 @@ public class Ghost extends Entity
 		return compt;
 	}
 	
-	public void moveGhostRandom() //à changer, le fantôme ne bouge pas
+	public void moveGhostRandom() // changer, le fante ne bouge pas
 	{
 		/*
 		int deltaX = rand.nextInt(2);

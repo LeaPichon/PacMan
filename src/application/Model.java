@@ -26,13 +26,21 @@ public class Model extends Observable implements Runnable
     
     public Model() 
     {
-        grid = new Grid();
         pacman = new Pacman();
+        grid = new Grid();
+        
         lastdir=Direction.debut;
         ghost1 = new Ghost(grid);
         ghost2 = new Ghost(grid);
         ghost3 = new Ghost(grid);
         ghost4 = new Ghost(grid);
+        
+        grid.addPacman(pacman);
+        
+        grid.addEntities(ghost1);
+        grid.addEntities(ghost2);
+        grid.addEntities(ghost3);
+        grid.addEntities(ghost4);
     }
     
     public int getPX() 
@@ -93,7 +101,7 @@ public class Model extends Observable implements Runnable
 	}
 
 	/*
-	 public void getGhostsOut() //à améliorer !
+	 public void getGhostsOut() // amliorer !
 	 
 	{
 		ghost2.setY(13);
@@ -159,23 +167,55 @@ public class Model extends Observable implements Runnable
     	{
 	    	case haut :
 	    		if (!grid.getCell(pacman.getX()-1, pacman.getY()))
-	    			pacman.setX(pacman.getX()-1);
-	    			break;
+                        {
+                            if(grid.collision(pacman,-1,0))
+                            {
+                                if(pacman.state()) pacman.setX(pacman.getX()-1);
+                                else pacman = new Pacman();
+                                
+                            }
+                            else pacman.setX(pacman.getX()-1);
+                        }                            
+	    		break;
 	    	case bas :
-	    		if (!grid.getCell(pacman.getX()+1, pacman.getY())) 
-	    			pacman.setX(pacman.getX()+1);
+	    		if (!grid.getCell(pacman.getX()+1, pacman.getY()))
+                        {
+                            if(grid.collision(pacman,1,0))
+                            {
+                                if(pacman.state()) pacman.setX(pacman.getX()+1);
+                                else pacman = new Pacman();
+                                
+                            }
+                            else pacman.setX(pacman.getX()+1);
+                        }		
 	    		break;
 	    	case gauche :
 	    		if (pacman.getX() == 9 && pacman.getY() == 0)
 	    			pacman.setY(26);
-	    		else if (!grid.getCell(pacman.getX(), pacman.getY()-1)) 
-	    			pacman.setY(pacman.getY()-1);
+	    		else if (!grid.getCell(pacman.getX(), pacman.getY()-1))
+                        {
+                            if(grid.collision(pacman,0,-1))
+                            {
+                                if(pacman.state()) pacman.setY(pacman.getY()-1);
+                                else pacman = new Pacman();
+                                
+                            }
+                            else pacman.setY(pacman.getY()-1);
+                        }
 	    		break;
 	    	case droite :
 	    		if (pacman.getX() == 9 && pacman.getY() == 26)
 	    			pacman.setY(0);
-	    		else if (!grid.getCell(pacman.getX(), pacman.getY()+1)) 
-	    			pacman.setY(pacman.getY()+1);
+	    		else if (!grid.getCell(pacman.getX(), pacman.getY()+1))
+                        {
+                            if(grid.collision(pacman,0,1))
+                            {
+                                if(pacman.state()) pacman.setY(pacman.getY()+1);
+                                else pacman = new Pacman();
+                                
+                            }
+                            else pacman.setY(pacman.getY()+1);
+                        }	    			
 	    		break;
 	    	default:
 	    		break;
@@ -189,27 +229,84 @@ public class Model extends Observable implements Runnable
     	{
 	    	case haut :
 	    		if (!grid.getCell(ghost.getX()-1, ghost.getY()))
-	    			ghost.setX(ghost.getX()-1);
+                        {
+                            if(grid.collisionGhost(ghost,-1,0))
+                            {
+                                if(pacman.state()) System.out.println("prout");
+                                else
+                                {
+                                     ghost.setX(ghost.getX()-1);
+                                     pacman = new Pacman();
+                                }
+                                
+                                
+                            }
+                            else ghost.setX(ghost.getX()-1);
+                            System.out.println("haut");
+                        }    
 	    			break;
 	    	case bas :
-	    		if (!grid.getCell(ghost.getX()+1, ghost.getY())) 
-	    			ghost.setX(ghost.getX()+1);
+	    		if (!grid.getCell(ghost.getX()+1, ghost.getY()))
+                        {
+                            if(grid.collisionGhost(ghost,1,0))
+                            {
+                                if(pacman.state()) System.out.println("prout");
+                                else
+                                {
+                                     ghost.setX(ghost.getX()+1);   
+                                     pacman = new Pacman();
+                                } 
+                                
+                            }
+                            else ghost.setX(ghost.getX()+1);
+                            System.out.println("bas");
+                        } 
 	    		break;
 	    	case gauche :
 	    		if (ghost.getX() == 9 && ghost.getY() == 0)
 	    			ghost.setY(26);
-	    		else if (!grid.getCell(ghost.getX(), ghost.getY()-1)) 
-	    			ghost.setY(ghost.getY()-1);
+	    		else if (!grid.getCell(ghost.getX(), ghost.getY()-1))
+                        {
+                            if(grid.collisionGhost(ghost,0,-1))
+                            {
+                                if(pacman.state()) System.out.println("prout");
+                                else
+                                {
+                                     ghost.setY(ghost.getY()-1);    
+                                     pacman = new Pacman();
+                                } 
+                                
+                            }
+                            else
+                                ghost.setY(ghost.getY()-1);
+                            
+                            
+                        } 
 	    		break;
 	    	case droite :
 	    		if (ghost.getX() == 9 && ghost.getY() == 26)
 	    			ghost.setY(0);
 	    		else if (!grid.getCell(ghost.getX(), ghost.getY()+1)) 
-	    			ghost.setY(ghost.getY()+1);
+                       {
+                            if(grid.collisionGhost(ghost,0,1))
+                            {
+                                if(pacman.state()) System.out.println("prout");
+                                else
+                                {
+                                     ghost.setY(ghost.getY()+1);    
+                                     pacman = new Pacman();
+                                } 
+                                
+                            }
+                            else                          
+                                ghost.setY(ghost.getY()+1);
+                            
+                        }
 	    		break;
 	    	default:
 	    		break;
     	}
+        grid.possibilite(ghost);
     	
     }
     
@@ -243,9 +340,10 @@ public class Model extends Observable implements Runnable
     public void run() 
     {
     	int compt = 8;
+        this.initGhosts();
         while(true) 
         {
-        	this.initGhosts();
+        	
         	
         	compt--;
         	if(compt==0)
@@ -260,13 +358,13 @@ public class Model extends Observable implements Runnable
         		while(!this.detectionMur(ghost3)) ghost3.moveGhostRandom();
         			
         		ghost4.moveGhostRandom();
-        		while(!this.detectionMur(ghost4)) ghost4.moveGhostRandom();
+                        while(!this.detectionMur(ghost4)) ghost4.moveGhostRandom();
         		compt=8;
         	}
             //this.getGhostsOut();
-        	//System.out.println(lastdir);
-        	deplacer();
-        	this.deplacerGhost(ghost1);
+        	
+        	this.deplacer();
+        	this.deplacerGhost(ghost1);              
     		this.deplacerGhost(ghost2);
     		this.deplacerGhost(ghost3);
     		this.deplacerGhost(ghost4);

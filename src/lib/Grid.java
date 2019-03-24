@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.Vector; 
 
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
@@ -17,9 +18,12 @@ public class Grid {
 	private Scanner scan;
 	private Scanner scan2;
 	private File file;
+        private Pacman pacman;
+        private Vector<Ghost> ghosts;
 	
 	public Grid()
 	{
+            ghosts = new Vector<Ghost>();
 		try
 		{
 			grid = new boolean[MAX_L][MAX_C];
@@ -79,8 +83,8 @@ public class Grid {
 		return grid[i][j];
 	}
 	
-	void possibilite(Ghost ghost)
-    {
+	public void possibilite(Ghost ghost)
+        {
 		boolean[] dummy = new boolean[4];
 		if (!this.getCell(ghost.getX()-1, ghost.getY()))
 			dummy[0]=true;
@@ -98,6 +102,31 @@ public class Grid {
 			dummy[3]=true;
 		 else dummy[3]=false;
 		 ghost.setPossibility(dummy);
+        }
+        
+    public void addEntities(Ghost ghost)
+    {
+        ghosts.addElement(ghost);
     }
-	
+    
+    public void addPacman(Pacman pacman)
+    {
+        this.pacman = pacman;
+    }
+    
+    public boolean collision(Pacman pacman, int X, int Y)
+    {
+        for(int i=0; i<4;i++)
+        {
+            if(ghosts.elementAt(i).getX() == pacman.getX() + X && ghosts.elementAt(i).getY() == pacman.getY() + Y) return true;
+        }
+        return false;  
+    }
+    
+    public boolean collisionGhost(Ghost ghost, int X, int Y)
+    {
+        
+       if(ghost.getX() + X == this.pacman.getX() && ghost.getY() + Y == this.pacman.getY()) return true; 
+       return false;  
+    }
 }

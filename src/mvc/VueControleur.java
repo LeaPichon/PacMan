@@ -23,13 +23,13 @@ import javafx.scene.text.TextAlignment;
 
 public class VueControleur extends Application 
 {    
-    // modèle : ce qui réalise le calcule de l'expression
+    // modle : ce qui ralise le calcule de l'expression
     Modele m;
-    // affiche la saisie et le résultat
+    // affiche la saisie et le rsultat
     @Override
     public void start(Stage primaryStage) 
     {        
-        // initialisation du modèle que l'on souhaite utiliser
+        // initialisation du modle que l'on souhaite utiliser
         m = new Modele();
         
         // gestion du placement (permet de palcer le champ Text affichage en haut, et GridPane gPane au centre)
@@ -42,7 +42,7 @@ public class VueControleur extends Application
         int row = 0;
         
         
-        // la vue observe les "update" du modèle, et réalise les mises Ã  jour graphiques
+        // la vue observe les "update" du modle, et ralise les mises Ã  jour graphiques
         m.addObserver(new Observer() {
             
             @Override
@@ -58,7 +58,7 @@ public class VueControleur extends Application
             
         });
         
-        // création des bouton et placement dans la grille
+        // crï¿½ation des bouton et placement dans la grille
         for (String s : new String[]{"7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "+", "0", "(", ")"}) {
             final Text t = new Text(s);
             t.setWrappingWidth(30);
@@ -72,7 +72,7 @@ public class VueControleur extends Application
                 row++;
             }
             
-            // un controleur (EventHandler) par bouton écoute et met Ã  jour le champ affichage
+            // un controleur (EventHandler) par bouton ï¿½coute et met Ã  jour le champ affichage
             t.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 
                 @Override
@@ -94,7 +94,7 @@ public class VueControleur extends Application
         t.setTextAlignment(TextAlignment.CENTER);
         //t.setEffect(new Shadow());
         
-        // un controleur écoute le bouton "=" et déclenche l'appel du modèle
+        // un controleur ï¿½coute le bouton "=" et dï¿½clenche l'appel du modï¿½le
         t.setOnMouseClicked(new EventHandler<MouseEvent>() {
             
             @Override
