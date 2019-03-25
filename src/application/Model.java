@@ -171,7 +171,11 @@ public class Model extends Observable implements Runnable
                             if(grid.collision(pacman,-1,0))
                             {
                                 if(pacman.state()) pacman.setX(pacman.getX()-1);
-                                else pacman = new Pacman();
+                                else 
+                                	{
+                                		pacman = new Pacman();
+                                		grid.addPacman(pacman);
+                                	}
                                 
                             }
                             else pacman.setX(pacman.getX()-1);
@@ -183,7 +187,11 @@ public class Model extends Observable implements Runnable
                             if(grid.collision(pacman,1,0))
                             {
                                 if(pacman.state()) pacman.setX(pacman.getX()+1);
-                                else pacman = new Pacman();
+                                else
+                                {
+                            		pacman = new Pacman();
+                            		grid.addPacman(pacman);
+                            	}
                                 
                             }
                             else pacman.setX(pacman.getX()+1);
@@ -197,7 +205,11 @@ public class Model extends Observable implements Runnable
                             if(grid.collision(pacman,0,-1))
                             {
                                 if(pacman.state()) pacman.setY(pacman.getY()-1);
-                                else pacman = new Pacman();
+                                else
+                                {
+                            		pacman = new Pacman();
+                            		grid.addPacman(pacman);
+                            	}
                                 
                             }
                             else pacman.setY(pacman.getY()-1);
@@ -211,8 +223,11 @@ public class Model extends Observable implements Runnable
                             if(grid.collision(pacman,0,1))
                             {
                                 if(pacman.state()) pacman.setY(pacman.getY()+1);
-                                else pacman = new Pacman();
-                                
+                                else 
+                                {
+                            		pacman = new Pacman();
+                            		grid.addPacman(pacman);
+                            	}
                             }
                             else pacman.setY(pacman.getY()+1);
                         }	    			
@@ -224,7 +239,9 @@ public class Model extends Observable implements Runnable
     
     void deplacerGhost(Ghost ghost)
     {
-    	Direction dir=ghost.getdir();
+    	Direction dir;
+    	if(grid.intersection(ghost)) ghost.moveGhostRandom(); 
+    	dir=ghost.getdir();
     	switch(dir)
     	{
 	    	case haut :
@@ -237,12 +254,13 @@ public class Model extends Observable implements Runnable
                                 {
                                      ghost.setX(ghost.getX()-1);
                                      pacman = new Pacman();
+                                     grid.addPacman(pacman);
                                 }
                                 
                                 
                             }
                             else ghost.setX(ghost.getX()-1);
-                            System.out.println("haut");
+                            
                         }    
 	    			break;
 	    	case bas :
@@ -255,11 +273,12 @@ public class Model extends Observable implements Runnable
                                 {
                                      ghost.setX(ghost.getX()+1);   
                                      pacman = new Pacman();
+                                     grid.addPacman(pacman);
                                 } 
                                 
                             }
                             else ghost.setX(ghost.getX()+1);
-                            System.out.println("bas");
+                            
                         } 
 	    		break;
 	    	case gauche :
@@ -274,6 +293,7 @@ public class Model extends Observable implements Runnable
                                 {
                                      ghost.setY(ghost.getY()-1);    
                                      pacman = new Pacman();
+                                     grid.addPacman(pacman);
                                 } 
                                 
                             }
@@ -295,6 +315,7 @@ public class Model extends Observable implements Runnable
                                 {
                                      ghost.setY(ghost.getY()+1);    
                                      pacman = new Pacman();
+                                     grid.addPacman(pacman);
                                 } 
                                 
                             }
@@ -362,9 +383,8 @@ public class Model extends Observable implements Runnable
         		compt=8;
         	}
             //this.getGhostsOut();
-        	
         	this.deplacer();
-        	this.deplacerGhost(ghost1);              
+        	this.deplacerGhost(ghost1);
     		this.deplacerGhost(ghost2);
     		this.deplacerGhost(ghost3);
     		this.deplacerGhost(ghost4);

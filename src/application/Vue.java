@@ -84,10 +84,12 @@ public class Vue extends Application
 	                {
 	                	if(grid.getCell(i, j) == true)
 	        		    	tabIV[i][j].setImage(wall);
-	        			else if ((i == 1 && j == 3) || (i == 25 && j == 3) || (i == 1 && j == 14) || (i == 25 && j == 14)) //a refaire (coordonn�es dans SuperPacGomme ?)
-	        				tabIV[i][j].setImage(superpacgomme);
+	        			//else if ((i == 1 && j == 3) || (i == 25 && j == 3) || (i == 1 && j == 14) || (i == 25 && j == 14)) //a refaire (coordonn�es dans SuperPacGomme ?) 
+	                	
 	                	else if (tabEmpty[i][j] == 1)
 	                		tabIV[i][j].setImage(empty);
+	                	else if(grid.SPG(i,j))
+	        				tabIV[i][j].setImage(superpacgomme);
 	                	else
 	        				tabIV[i][j].setImage(pacgomme);
 	                	

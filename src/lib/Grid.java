@@ -18,12 +18,20 @@ public class Grid {
 	private Scanner scan;
 	private Scanner scan2;
 	private File file;
-        private Pacman pacman;
-        private Vector<Ghost> ghosts;
+	
+    private Pacman pacman;
+    private Vector<Ghost> ghosts;
+    private Vector<SuperPacGomme> superPacgommes;
 	
 	public Grid()
 	{
             ghosts = new Vector<Ghost>();
+            superPacgommes = new Vector<SuperPacGomme>();
+            superPacgommes.addElement(new SuperPacGomme(1,3));
+            superPacgommes.addElement(new SuperPacGomme(25,3));
+            superPacgommes.addElement(new SuperPacGomme(1,14));
+            superPacgommes.addElement(new SuperPacGomme(25,14));
+            
 		try
 		{
 			grid = new boolean[MAX_L][MAX_C];
@@ -93,17 +101,42 @@ public class Grid {
 		if (!this.getCell(ghost.getX()+1, ghost.getY())) 
 			dummy[1]=true;
 		else dummy[1]=false;
-	
-		if (!this.getCell(ghost.getX(), ghost.getY()-1)) 
+		
+		if (ghost.getX() == 9 && ghost.getY() == 0) dummy[2]=true;
+		else if (!this.getCell(ghost.getX(), ghost.getY()-1)) 
 			dummy[2]=true;
 		else dummy[2]=false;
-	
-		 if (!this.getCell(ghost.getX(), ghost.getY()+1)) 
+		
+		if (ghost.getX() == 9 && ghost.getY() == 26) dummy[2]=true;
+		else if (!this.getCell(ghost.getX(), ghost.getY()+1)) 
 			dummy[3]=true;
 		 else dummy[3]=false;
 		 ghost.setPossibility(dummy);
         }
-        
+     
+	public boolean[] testPossibilite(Ghost ghost)
+    {
+	boolean[] dummy = new boolean[4];
+	if (!this.getCell(ghost.getX()-1, ghost.getY()))
+		dummy[0]=true;
+	else dummy[0]=false;
+
+	if (!this.getCell(ghost.getX()+1, ghost.getY())) 
+		dummy[1]=true;
+	else dummy[1]=false;
+	
+	if (ghost.getX() == 9 && ghost.getY() == 0) dummy[2]=true;
+	else if (!this.getCell(ghost.getX(), ghost.getY()-1)) 
+		dummy[2]=true;
+	else dummy[2]=false;
+	
+	if (ghost.getX() == 9 && ghost.getY() == 26) dummy[2]=true;
+	else if (!this.getCell(ghost.getX(), ghost.getY()+1)) 
+		dummy[3]=true;
+	 else dummy[3]=false;
+	 return dummy;
+    }
+	
     public void addEntities(Ghost ghost)
     {
         ghosts.addElement(ghost);
@@ -126,7 +159,38 @@ public class Grid {
     public boolean collisionGhost(Ghost ghost, int X, int Y)
     {
         
-       if(ghost.getX() + X == this.pacman.getX() && ghost.getY() + Y == this.pacman.getY()) return true; 
+       if(ghost.getX() + X == this.pacman.getX() && ghost.getY() + Y == this.pacman.getY())
+       {
+    	   System.out.println(this.pacman.getX());
+    	   System.out.print(this.pacman.getY());
+    	   	return true; 
+       }
+
        return false;  
+    }
+    
+    public boolean compare(boolean[] possibility, boolean[] newpossibility)
+	{
+		for(int i = 0; i<4; i++) if(possibility[i] != newpossibility[i]) return false;
+		return true;
+	}
+    
+    public boolean intersection(Ghost ghost)
+    {
+    	boolean[] temp = new boolean[4];
+    	boolean[] temp2 = new boolean[4];
+    	temp= ghost.getPossibility();
+    	temp2 = testPossibilite(ghost);
+    	return !compare(temp,temp2);
+    }
+    
+    public boolean SPG(int i, int j)
+    {
+    	for(int k = 0; i<4; i++)
+    	{
+    		if(superPacgommes.get(k).getX() == i && superPacgommes.get(k).getY() == j) return true;
+    	}
+    	return false;
+    	
     }
 }

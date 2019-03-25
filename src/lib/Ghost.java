@@ -72,6 +72,7 @@ public class Ghost extends Entity
 		return compt;
 	}
 	
+	
 	public void moveGhostRandom() // changer, le fante ne bouge pas
 	{
 		/*

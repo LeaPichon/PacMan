@@ -5,10 +5,11 @@ public class SuperPacGomme
 	private int x;
 	private int y;
 	
-	public void SuperPacGomme()
+
+	public SuperPacGomme(int i, int j)
 	{
-		x = 0;
-		y = 0;
+		x = i;
+		y = j;
 	}
 
 	public int getX() 
