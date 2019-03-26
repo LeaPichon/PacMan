@@ -29,7 +29,7 @@ public class Vue extends Application
     	StackPane root = new StackPane();
     	Scene scene = new Scene(root, 810, 630, Color.WHITE);
     	
-    	//initialisation du modï¿½le
+    	//initialisation du modèle
     	Model model = new Model();
     	
     	//prï¿½paration des images    	
