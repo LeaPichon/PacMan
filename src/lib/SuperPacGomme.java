@@ -1,6 +1,6 @@
 package lib;
 
-public class SuperPacGomme 
+public class SuperPacGomme extends Items
 {
 	private int x;
 	private int y;

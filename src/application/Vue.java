@@ -32,7 +32,7 @@ public class Vue extends Application
     	//initialisation du modle
     	model = new Model();
     	
-    	//prï¿½paration des images    	
+    	//préparation des images    	
     	Image wall = new Image("images/wall.png");
     	Image empty = new Image("images/empty.png");
     	Image pacman = new Image("images/pacman.png");
@@ -46,13 +46,13 @@ public class Vue extends Application
     	
     	//initialisaton de la grille et des tableaux
     	GridPane gridpane = new GridPane();
-    	ImageView[][] tabIV = new ImageView[model.grid.getIndexL()][model.grid.getIndexC()];
-    	int[][] tabEmpty = new int[model.grid.getIndexL()][model.grid.getIndexC()];
-    	for(int i = 0; i < model.grid.getIndexL(); i++)
+    	ImageView[][] tabIV = new ImageView[model.getGrid().getIndexL()][model.getGrid().getIndexC()];
+    	int[][] tabEmpty = new int[model.getGrid().getIndexL()][model.getGrid().getIndexC()];
+    	for(int i = 0; i < model.getGrid().getIndexL(); i++)
     	{
-    		for(int j = 0; j < model.grid.getIndexC(); j++)
+    		for(int j = 0; j < model.getGrid().getIndexC(); j++)
     		{
-    			if (model.grid.getCell(i, j))
+    			if (model.getGrid().getCell(i, j))
     			{
     				ImageView imgWall = new ImageView(wall);
     				imgWall.setFitHeight(30);
@@ -77,19 +77,19 @@ public class Vue extends Application
 	        @Override
 	        public void update(Observable obs, Object arg) 
 	        {
-	            for (int i = 0; i < model.grid.getIndexL(); i++) // rafraichissement graphique
+	            for (int i = 0; i < model.getGrid().getIndexL(); i++) // rafraichissement graphique
 	            { 
-	                for (int j = 0; j < model.grid.getIndexC(); j++) 
+	                for (int j = 0; j < model.getGrid().getIndexC(); j++) 
 	                {
-	                	if(model.grid.getCell(i, j) == true)
+	                	if(model.getGrid().getCell(i, j) == true)
 	        		    	tabIV[i][j].setImage(wall);
 	                	
-	                	else if (model.grid.SPG(i,j))
+	                	else if (model.getGrid().SPG(i,j))
                                 {
                                     tabIV[i][j].setImage(superpacgomme);
-                                    //System.out.println(model.grid.SPG(i,j) + "i = " + i + "j = " + j );
+                                    //System.out.println(model.getGrid().SPG(i,j) + "i = " + i + "j = " + j );
                                 }
-                                else if(model.grid.PG(i,j))
+                                else if(model.getGrid().PG(i,j))
 	                		tabIV[i][j].setImage(pacgomme);
 	                	else
                                     tabIV[i][j].setImage(empty);

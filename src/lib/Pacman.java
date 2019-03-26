@@ -1,10 +1,5 @@
 package lib;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import application.Model;
-
 public class Pacman extends Entity
 {	
 	private int x;

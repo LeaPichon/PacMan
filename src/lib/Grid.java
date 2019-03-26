@@ -1,12 +1,8 @@
 package lib;
-import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.Vector; 
-
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
+import java.util.Vector;
 
 public class Grid {
 	
@@ -18,7 +14,6 @@ public class Grid {
 	private Scanner scan;
 	private Scanner scan2;
 	private File file;
-
 	
     private Pacman pacman;
     private Vector<Ghost> ghosts;
@@ -260,5 +255,11 @@ public class Grid {
                 return ghosts.elementAt(k);
         }
         return null;
+    }
+    
+    public boolean isEmpty()
+    {
+    	if(Pacgommes.isEmpty()) return true;
+    	else return false;
     }
 }

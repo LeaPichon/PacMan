@@ -2,10 +2,6 @@ package lib;
 
 import java.util.Random;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import application.Model;
 
 
 public class Ghost extends Entity
@@ -18,11 +14,13 @@ public class Ghost extends Entity
 	private boolean[] possibility;
 	
 	
-	public Ghost(Grid grid) 
+	public Ghost(Grid grid, int x, int y) 
 	{
         super();
-        x = 9;
-        y = 13;
+        //x = 9;
+        //y = 13;
+        this.x = x;
+        this.y = y;
         possibility = new boolean[4];
         this.grid=grid;
         this.grid.possibilite(this);
@@ -83,7 +81,7 @@ public class Ghost extends Entity
 		return compt;
 	}
 	
-	public void moveGhostRandom() // changer, le fante ne bouge pas
+	public void moveGhostRandom()
 	{
 		int number = countPossibility();
 		

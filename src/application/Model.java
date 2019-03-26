@@ -5,22 +5,24 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import lib.Direction;
 import lib.Ghost;
 import lib.Grid;
 import lib.Pacman;
-import lib.Direction;
 
 
 public class Model extends Observable implements Runnable 
 {
-    public Grid grid;
+    private Grid grid;
     private Pacman pacman;
     private Ghost ghost1;
     private Ghost ghost2;
     private Ghost ghost3;
     private Ghost ghost4;
     
+    
     private int score = 0;
+    private boolean Win = false;
     
     private Direction lastdir;
     
@@ -32,10 +34,10 @@ public class Model extends Observable implements Runnable
         grid = new Grid();
         
         lastdir = Direction.debut;
-        ghost1 = new Ghost(grid);
-        ghost2 = new Ghost(grid);
-        ghost3 = new Ghost(grid);
-        ghost4 = new Ghost(grid);
+        ghost1 = new Ghost(grid,9,9);
+        ghost2 = new Ghost(grid,11,12);
+        ghost3 = new Ghost(grid,7,14);
+        ghost4 = new Ghost(grid,9,17);
         
         grid.addPacman(pacman);
         
@@ -100,7 +102,22 @@ public class Model extends Observable implements Runnable
         return ghost4.getY();
     }
     
-    public int getScore()
+    public Grid getGrid() 
+    {
+		return grid;
+	}
+    
+    public boolean getWin()
+    {
+    	return Win;
+    }
+    
+	public void setGrid(Grid grid) 
+	{
+		this.grid = grid;
+	}
+
+	public int getScore()
     {
 	return score;
     }
@@ -110,23 +127,10 @@ public class Model extends Observable implements Runnable
 	this.score = score;
     }
     
-	public void initGhosts() 
-	{
-	    ghost1.setY(9);
-	    ghost2.setX(11);
-	    ghost2.setY(12);
-	    ghost3.setX(7);
-	    ghost3.setY(14);
-	    ghost4.setY(17);
-	}
-	
-	public void moveGhostsRandom()
-	{
-    	ghost1.moveGhostRandom();
-    	ghost2.moveGhostRandom();
-		ghost3.moveGhostRandom();
-		ghost4.moveGhostRandom();
-	}
+    public void isWon() 
+    {
+    	if(grid.isEmpty()) Win = true;
+    }
     
     public void start() 
     {
@@ -469,15 +473,15 @@ public class Model extends Observable implements Runnable
     public void run() 
     {
     	int compt = 8;
-    	int c = 0;
+    	int comptSP = 0;
     	
-        this.initGhosts();
+        //this.initGhosts();
         while(true) 
         {
-        	if (c == 30)
+        	if (comptSP == 30)
         	{
         		pacman.changeState(false);
-        		c = 0;
+        		comptSP = 0;
         	}
         	compt--;
         	if(compt==0)
@@ -503,7 +507,7 @@ public class Model extends Observable implements Runnable
     		this.deplacerGhost(ghost4);
         	
     		if(pacman.state())
-    			c++;
+    			comptSP++;
 
     		setChanged(); 
         	notifyObservers(); // notification de l'observer
