@@ -5,11 +5,11 @@ import java.util.Observer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lib.Grid;
@@ -26,7 +26,7 @@ public class Vue extends Application
     	stage.setTitle("Pacman");
     	GridPane root = new GridPane();
     	Scene scene = new Scene(root, 810, 680, Color.WHITE);
-    	TextArea score = new TextArea("Score");
+    	StackPane stackpane = new StackPane();
     	
     	//initialisation du modèle
     	Model model = new Model();
@@ -42,6 +42,11 @@ public class Vue extends Application
     	Image pacgomme = new Image("images/pacgomme.png");
     	Image superpacgomme = new Image("images/superpacgomme.png");
     	Image ghostSPG = new Image("images/ghostSPG.png");
+    	Image score = new Image("images/score.png");
+    	
+    	ImageView imgscore = new ImageView(score);
+    	
+    	stackpane.getChildren().add(imgscore);
     	
     	//initialisaton de la grille et des tableaux
     	grid = new Grid();
@@ -125,7 +130,7 @@ public class Vue extends Application
 	    
 	    model.addObserver(obs);
 	    model.start();
-	    root.add(score, 0, 0);
+	    root.add(stackpane, 0, 0);
 	    root.add(gridpane, 0, 1);
 	    
 	    stage.setScene(scene);
