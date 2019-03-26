@@ -42,6 +42,7 @@ public class Vue extends Application
     	Image ghost4 = new Image("images/ghost4.png");
     	Image pacgomme = new Image("images/pacgomme.png");
     	Image superpacgomme = new Image("images/superpacgomme.png");
+    	Image ghostSPG = new Image("images/ghostSPG.png");
     	
     	//initialisaton de la grille et des tableaux
     	grid = new Grid();
@@ -52,7 +53,7 @@ public class Vue extends Application
     	{
     		for(int j = 0; j < grid.getIndexC(); j++)
     		{
-    			if(grid.getCell(i, j) == true)
+    			if (grid.getCell(i, j))
     			{
     				ImageView imgWall = new ImageView(wall);
     				imgWall.setFitHeight(30);
@@ -84,11 +85,9 @@ public class Vue extends Application
 	                {
 	                	if(grid.getCell(i, j) == true)
 	        		    	tabIV[i][j].setImage(wall);
-	        			//else if ((i == 1 && j == 3) || (i == 25 && j == 3) || (i == 1 && j == 14) || (i == 25 && j == 14)) //a refaire (coordonn�es dans SuperPacGomme ?) 
-	                	
 	                	else if (tabEmpty[i][j] == 1)
 	                		tabIV[i][j].setImage(empty);
-	                	else if(grid.SPG(i,j))
+	                	else if (grid.SPG(i,j))
 	        				tabIV[i][j].setImage(superpacgomme);
 	                	else
 	        				tabIV[i][j].setImage(pacgomme);

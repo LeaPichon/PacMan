@@ -29,7 +29,7 @@ public class Model extends Observable implements Runnable
         pacman = new Pacman();
         grid = new Grid();
         
-        lastdir=Direction.debut;
+        lastdir = Direction.debut;
         ghost1 = new Ghost(grid);
         ghost2 = new Ghost(grid);
         ghost3 = new Ghost(grid);
@@ -99,32 +99,7 @@ public class Model extends Observable implements Runnable
 	    ghost3.setY(14);
 	    ghost4.setY(17);
 	}
-
-	/*
-	 public void getGhostsOut() // amliorer !
-	 
-	{
-		ghost2.setY(13);
-	    ghost2.setX(8);
-	    ghost2.setX(7);
-    	ghost2.moveGhostRandom();
-    	ghost3.setY(13);
-	    ghost3.setX(8);
-	    ghost3.setX(7);
-    	ghost3.moveGhostRandom();		
-    	ghost1.setY(12);		
-    	ghost1.setY(13);
-	    ghost1.setX(8);
-	    ghost1.setX(7);
-    	ghost1.moveGhostRandom();
-	    ghost4.setY(12);		
-    	ghost4.setY(13);
-	    ghost4.setX(8);
-	    ghost4.setX(7);
-    	ghost4.moveGhostRandom();
-	}
 	
-	*/
 	public void moveGhostsRandom()
 	{
     	ghost1.moveGhostRandom();
@@ -155,10 +130,7 @@ public class Model extends Observable implements Runnable
     		case "d" :
     			lastdir=Direction.droite;
     			break;
-    		
     	}
-    	
-    	
     }
     
     void deplacer()
@@ -167,71 +139,80 @@ public class Model extends Observable implements Runnable
     	{
 	    	case haut :
 	    		if (!grid.getCell(pacman.getX()-1, pacman.getY()))
-                        {
-                            if(grid.collision(pacman,-1,0))
-                            {
-                                if(pacman.state()) pacman.setX(pacman.getX()-1);
-                                else 
-                                	{
-                                		pacman = new Pacman();
-                                		grid.addPacman(pacman);
-                                	}
-                                
-                            }
-                            else pacman.setX(pacman.getX()-1);
-                        }                            
+                {
+                    if(grid.collision(pacman,-1,0))
+                    {
+                        if(pacman.state()) 
+                        	pacman.setX(pacman.getX()-1);
+                        else 
+                    	{
+                    		pacman = new Pacman();
+                    		grid.addPacman(pacman);
+                    	}
+                    }
+                    else 
+                    	pacman.setX(pacman.getX()-1);
+                }                            
 	    		break;
+	    		
 	    	case bas :
 	    		if (!grid.getCell(pacman.getX()+1, pacman.getY()))
+                {
+                    if(grid.collision(pacman,1,0))
+                    {
+                        if(pacman.state()) 
+                        	pacman.setX(pacman.getX()+1);
+                        else
                         {
-                            if(grid.collision(pacman,1,0))
-                            {
-                                if(pacman.state()) pacman.setX(pacman.getX()+1);
-                                else
-                                {
-                            		pacman = new Pacman();
-                            		grid.addPacman(pacman);
-                            	}
-                                
-                            }
-                            else pacman.setX(pacman.getX()+1);
-                        }		
+                    		pacman = new Pacman();
+                    		grid.addPacman(pacman);
+                    	}
+                    }
+                    else 
+                    	pacman.setX(pacman.getX()+1);
+                }		
 	    		break;
+	    		
 	    	case gauche :
 	    		if (pacman.getX() == 9 && pacman.getY() == 0)
 	    			pacman.setY(26);
 	    		else if (!grid.getCell(pacman.getX(), pacman.getY()-1))
-                        {
-                            if(grid.collision(pacman,0,-1))
-                            {
-                                if(pacman.state()) pacman.setY(pacman.getY()-1);
-                                else
-                                {
-                            		pacman = new Pacman();
-                            		grid.addPacman(pacman);
-                            	}
-                                
-                            }
-                            else pacman.setY(pacman.getY()-1);
-                        }
+                {
+	                if(grid.collision(pacman,0,-1))
+	                {
+	                    if(pacman.state()) 
+	                    	pacman.setY(pacman.getY()-1);
+	                    else
+	                    {
+	                		pacman = new Pacman();
+	                		grid.addPacman(pacman);
+	                	}
+	                }
+	                else 
+	                	pacman.setY(pacman.getY()-1);
+                }
 	    		break;
+	    		
 	    	case droite :
 	    		if (pacman.getX() == 9 && pacman.getY() == 26)
 	    			pacman.setY(0);
 	    		else if (!grid.getCell(pacman.getX(), pacman.getY()+1))
+                {
+                    if(grid.collision(pacman,0,1))
+                    {
+                        if(pacman.state()) 
+                        	pacman.setY(pacman.getY()+1);
+                        else 
                         {
-                            if(grid.collision(pacman,0,1))
-                            {
-                                if(pacman.state()) pacman.setY(pacman.getY()+1);
-                                else 
-                                {
-                            		pacman = new Pacman();
-                            		grid.addPacman(pacman);
-                            	}
-                            }
-                            else pacman.setY(pacman.getY()+1);
-                        }	    			
+                    		pacman = new Pacman();
+                    		grid.addPacman(pacman);
+                    	}
+                    }
+                    else 
+                    	pacman.setY(pacman.getY()+1);
+                }	    			
 	    		break;
+	    		
 	    	default:
 	    		break;
     	}
@@ -240,68 +221,70 @@ public class Model extends Observable implements Runnable
     void deplacerGhost(Ghost ghost)
     {
     	Direction dir;
-    	if(grid.intersection(ghost)) ghost.moveGhostRandom(); 
-    	dir=ghost.getdir();
+    	if(grid.intersection(ghost)) 
+    		ghost.moveGhostRandom(); 
+    	dir = ghost.getdir();
+    	
     	switch(dir)
     	{
 	    	case haut :
-	    		if (!grid.getCell(ghost.getX()-1, ghost.getY()))
+	    		if (!grid.getCell(ghost.getX() - 1, ghost.getY()))
+                {
+                    if (grid.collisionGhost(ghost, -1, 0))
+                    {
+                        if (pacman.state()) 
                         {
-                            if(grid.collisionGhost(ghost,-1,0))
-                            {
-                                if(pacman.state()) System.out.println("prout");
-                                else
-                                {
-                                     ghost.setX(ghost.getX()-1);
-                                     pacman = new Pacman();
-                                     grid.addPacman(pacman);
-                                }
-                                
-                                
-                            }
-                            else ghost.setX(ghost.getX()-1);
-                            
-                        }    
-	    			break;
+                            System.out.println("prout");
+                        }
+                        else
+                        {
+                             ghost.setX(ghost.getX()-1);
+                             pacman = new Pacman();
+                             grid.addPacman(pacman);
+                        }
+                    }
+                    else 
+                    	ghost.setX(ghost.getX()-1);
+                }    
+	    		break;
+	    		
 	    	case bas :
 	    		if (!grid.getCell(ghost.getX()+1, ghost.getY()))
+                {
+                    if (grid.collisionGhost(ghost,1,0))
+                    {
+                        if (pacman.state()) 
+                        	System.out.println("prout");
+                        else
                         {
-                            if(grid.collisionGhost(ghost,1,0))
-                            {
-                                if(pacman.state()) System.out.println("prout");
-                                else
-                                {
-                                     ghost.setX(ghost.getX()+1);   
-                                     pacman = new Pacman();
-                                     grid.addPacman(pacman);
-                                } 
-                                
-                            }
-                            else ghost.setX(ghost.getX()+1);
-                            
+                             ghost.setX(ghost.getX()+1);   
+                             pacman = new Pacman();
+                             grid.addPacman(pacman);
                         } 
+                    }
+                    else 
+                    	ghost.setX(ghost.getX()+1);
+                } 
 	    		break;
 	    	case gauche :
 	    		if (ghost.getX() == 9 && ghost.getY() == 0)
 	    			ghost.setY(26);
 	    		else if (!grid.getCell(ghost.getX(), ghost.getY()-1))
+                {
+                    if (grid.collisionGhost(ghost,0,-1))
+                    {
+                        if (pacman.state()) 
+                        	System.out.println("prout");
+                        else
                         {
-                            if(grid.collisionGhost(ghost,0,-1))
-                            {
-                                if(pacman.state()) System.out.println("prout");
-                                else
-                                {
-                                     ghost.setY(ghost.getY()-1);    
-                                     pacman = new Pacman();
-                                     grid.addPacman(pacman);
-                                } 
-                                
-                            }
-                            else
-                                ghost.setY(ghost.getY()-1);
-                            
-                            
+                             ghost.setY(ghost.getY()-1);    
+                             pacman = new Pacman();
+                             grid.addPacman(pacman);
                         } 
+                    }
+                    else
+                        ghost.setY(ghost.getY()-1);
+                } 
 	    		break;
 	    	case droite :
 	    		if (ghost.getX() == 9 && ghost.getY() == 26)
@@ -388,6 +371,8 @@ public class Model extends Observable implements Runnable
     		this.deplacerGhost(ghost2);
     		this.deplacerGhost(ghost3);
     		this.deplacerGhost(ghost4);
+    		
+    		//System.out.println("(" + pacman.getX() + ", " + pacman.getY() + ")");
         	setChanged(); 
         	notifyObservers(); // notification de l'observer
            
