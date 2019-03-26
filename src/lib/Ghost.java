@@ -2,6 +2,10 @@ package lib;
 
 import java.util.Random;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import application.Model;
 
 
 public class Ghost extends Entity
@@ -45,15 +49,22 @@ public class Ghost extends Entity
 		this.y = y;
 	}
 	
+	public void resetGhost()
+	{
+		setX(7);
+		setY(13);
+	}
+	
 	public Direction getdir()
 	{
 		return lastdir;
 	}
 	
-        public boolean[] getPossibility()
-        {
-            return possibility;
-        }
+    public boolean[] getPossibility()
+    {
+        return possibility;
+    }
+    
 	public void setPossibility(boolean[] result)
 	{
 		for(int i=0; i<4; i++)
@@ -72,41 +83,8 @@ public class Ghost extends Entity
 		return compt;
 	}
 	
-	
 	public void moveGhostRandom() // changer, le fante ne bouge pas
 	{
-		/*
-		int deltaX = rand.nextInt(2);
-		int deltaY = rand.nextInt(2);
-		int sensX = rand.nextInt(2);
-		int sensY = rand.nextInt(2);
-		grid = new Grid();
-		
-        if(sensX == 0 && sensY == 0)
-        	if(!grid.getCell(x + deltaX, y + deltaY))
-	        {
-	        	x += deltaX;
-	        	y += deltaY;
-	        }
-        if(sensX == 0 && sensY == 1)
-        	if(!grid.getCell(x + deltaX, y - deltaY))
-	        {
-	        	x += deltaX;
-	        	y -= deltaY;
-	        }
-        if(sensX == 1 && sensY == 0)
-        	if(!grid.getCell(x - deltaX, y + deltaY))
-	        {
-	        	x -= deltaX;
-	        	y += deltaY;
-	        }
-        if(sensX == 1 && sensY == 1)
-        	if(!grid.getCell(x - deltaX, y - deltaY))
-	        {
-	        	x -= deltaX;
-	        	y -= deltaY;
-	        }
-	        */
 		int number = countPossibility();
 		
 		int choix = rand.nextInt(number);

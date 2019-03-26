@@ -19,6 +19,8 @@ public class Grid {
 	private Scanner scan2;
 	private File file;
 	
+	private int score = 0;
+	
     private Pacman pacman;
     private Vector<Ghost> ghosts;
     private Vector<SuperPacGomme> superPacgommes;
@@ -87,6 +89,16 @@ public class Grid {
 		return indexC;
 	}
 	
+	public int getScore()
+	{
+		return score;
+	}
+	
+	public void setScore(int score)
+	{
+		this.score = score;
+	}
+	
 	public boolean getCell(int i, int j)
 	{
 		return grid[i][j];
@@ -152,7 +164,7 @@ public class Grid {
     {
         for(int i = 0; i < 4; i++)
         {
-            if(ghosts.elementAt(i).getX() == pacman.getX() + X && ghosts.elementAt(i).getY() == pacman.getY() + Y) 
+            if (ghosts.elementAt(i).getX() == pacman.getX() + X && ghosts.elementAt(i).getY() == pacman.getY() + Y) 
             	return true;
         }
         return false;  
@@ -161,11 +173,9 @@ public class Grid {
     public boolean collisionGhost(Ghost ghost, int X, int Y)
     {
         
-       if(ghost.getX() + X == this.pacman.getX() && ghost.getY() + Y == this.pacman.getY())
+       if (ghost.getX() + X == this.pacman.getX() && ghost.getY() + Y == this.pacman.getY())
        {
-    	   System.out.println(this.pacman.getX());
-    	   System.out.print(this.pacman.getY());
-    	   	return true; 
+    	   return true; 
        }
 
        return false;  
@@ -196,6 +206,10 @@ public class Grid {
     			return true;
     	}
     	return false;
-    	
+    }
+    
+    public SuperPacGomme getSPG(int i)
+    {
+    	return superPacgommes.get(i);
     }
 }

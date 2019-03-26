@@ -1,10 +1,15 @@
 package lib;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import application.Model;
+
 public class Pacman extends Entity
 {	
 	private int x;
 	private int y;
-        private boolean powerUp;
+    private boolean powerUp;
 	
 	public Pacman() 
 	{
@@ -37,5 +42,10 @@ public class Pacman extends Entity
     public boolean state()
     {
         return powerUp;
+    }
+    
+    public void changeState(boolean state)
+    {
+    	this.powerUp = state;
     }
 }

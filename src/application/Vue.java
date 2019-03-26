@@ -4,13 +4,12 @@ import java.util.Observer;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import lib.Grid;
@@ -24,10 +23,10 @@ public class Vue extends Application
     @Override
     public void start(Stage stage) 
     {
-    	
     	stage.setTitle("Pacman");
-    	StackPane root = new StackPane();
-    	Scene scene = new Scene(root, 810, 630, Color.WHITE);
+    	GridPane root = new GridPane();
+    	Scene scene = new Scene(root, 810, 680, Color.WHITE);
+    	TextArea score = new TextArea("Score");
     	
     	//initialisation du modèle
     	Model model = new Model();
@@ -78,7 +77,6 @@ public class Vue extends Application
 	        @Override
 	        public void update(Observable obs, Object arg) 
 	        {
-	        	
 	            for (int i = 0; i < grid.getIndexL(); i++) // rafraichissement graphique
 	            { 
 	                for (int j = 0; j < grid.getIndexC(); j++) 
@@ -88,13 +86,12 @@ public class Vue extends Application
 	                	else if (tabEmpty[i][j] == 1)
 	                		tabIV[i][j].setImage(empty);
 	                	else if (grid.SPG(i,j))
-                                {
-                                    tabIV[i][j].setImage(superpacgomme);
-                                        System.out.println(grid.SPG(i,j) + "i = " + i + "j = " + j );
-                                }
-	        			
+                        {
+                            tabIV[i][j].setImage(superpacgomme);
+                            //System.out.println(grid.SPG(i,j) + "i = " + i + "j = " + j );
+                        }
 	                	else
-	        			tabIV[i][j].setImage(pacgomme);
+	                		tabIV[i][j].setImage(pacgomme);
 	                	
 	                	if(model.getPX() == i && model.getPY() == j)
 	                	{
@@ -102,13 +99,25 @@ public class Vue extends Application
 	                		tabEmpty[i][j] = 1;
 	                	}
 	                    if(model.getGX1() == i && model.getGY1()==j)
-	                    	tabIV[i][j].setImage(ghost1);
+	                    	if (model.getPState())
+	                    		tabIV[i][j].setImage(ghostSPG);
+	                    	else
+	                    		tabIV[i][j].setImage(ghost1);
 	                    if(model.getGX2() == i && model.getGY2()==j)
-	                    	tabIV[i][j].setImage(ghost2);
+	                    	if (model.getPState())
+	                    		tabIV[i][j].setImage(ghostSPG);
+	                    	else
+	                    		tabIV[i][j].setImage(ghost2);
 	                    if(model.getGX3() == i && model.getGY3()==j)
-	                    	tabIV[i][j].setImage(ghost3);
+	                    	if (model.getPState())
+	                    		tabIV[i][j].setImage(ghostSPG);
+	                    	else
+	                    		tabIV[i][j].setImage(ghost3);
 	                    if(model.getGX4() == i && model.getGY4()==j)
-	                    	tabIV[i][j].setImage(ghost4);
+	                    	if (model.getPState())
+	                    		tabIV[i][j].setImage(ghostSPG);
+	                    	else
+	                    		tabIV[i][j].setImage(ghost4);
 	                }
 	            }
 	        }
@@ -116,8 +125,9 @@ public class Vue extends Application
 	    
 	    model.addObserver(obs);
 	    model.start();
+	    root.add(score, 0, 0);
+	    root.add(gridpane, 0, 1);
 	    
-	    root.getChildren().add(gridpane);
 	    stage.setScene(scene);
 	    stage.show();
 	    
