@@ -290,22 +290,21 @@ public class Model extends Observable implements Runnable
 	    		if (ghost.getX() == 9 && ghost.getY() == 26)
 	    			ghost.setY(0);
 	    		else if (!grid.getCell(ghost.getX(), ghost.getY()+1)) 
-                       {
-                            if(grid.collisionGhost(ghost,0,1))
-                            {
-                                if(pacman.state()) System.out.println("prout");
-                                else
-                                {
-                                     ghost.setY(ghost.getY()+1);    
-                                     pacman = new Pacman();
-                                     grid.addPacman(pacman);
-                                } 
-                                
-                            }
-                            else                          
-                                ghost.setY(ghost.getY()+1);
-                            
-                        }
+               {
+                    if(grid.collisionGhost(ghost,0,1))
+                    {
+                        if(pacman.state()) 
+                        	System.out.println("prout");
+                        else
+                        {
+                             ghost.setY(ghost.getY()+1);    
+                             pacman = new Pacman();
+                             grid.addPacman(pacman);
+                        } 
+                    }
+                    else                          
+                        ghost.setY(ghost.getY()+1);
+                }
 	    		break;
 	    	default:
 	    		break;
@@ -378,7 +377,7 @@ public class Model extends Observable implements Runnable
            
            try 
            {
-               Thread.sleep(300); // pause
+               Thread.sleep(200); // pause
            } 
            catch (InterruptedException ex) 
            {
