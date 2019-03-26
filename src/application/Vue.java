@@ -26,7 +26,7 @@ public class Vue extends Application
     {
     	stage.setTitle("Pacman");
     	GridPane root = new GridPane();
-    	Scene scene = new Scene(root, 810, 680, Color.WHITE);
+    	Scene scene = new Scene(root, 810, 630, Color.WHITE);
     	StackPane stackpane = new StackPane();
     	
     	//initialisation du modle
@@ -43,11 +43,6 @@ public class Vue extends Application
     	Image pacgomme = new Image("images/pacgomme.png");
     	Image superpacgomme = new Image("images/superpacgomme.png");
     	Image ghostSPG = new Image("images/ghostSPG.png");
-        Image score = new Image("images/score.png");
-    	
-    	ImageView imgscore = new ImageView(score);
-    	
-    	stackpane.getChildren().add(imgscore);
     	
     	//initialisaton de la grille et des tableaux
     	GridPane gridpane = new GridPane();
