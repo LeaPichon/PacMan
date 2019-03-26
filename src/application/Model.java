@@ -13,12 +13,14 @@ import lib.Direction;
 
 public class Model extends Observable implements Runnable 
 {
-    private Grid grid;
+    public Grid grid;
     private Pacman pacman;
     private Ghost ghost1;
     private Ghost ghost2;
     private Ghost ghost3;
     private Ghost ghost4;
+    
+    private int score = 0;
     
     private Direction lastdir;
     
@@ -98,6 +100,16 @@ public class Model extends Observable implements Runnable
         return ghost4.getY();
     }
     
+    public int getScore()
+    {
+	return score;
+    }
+	
+    public void setScore(int score)
+    {
+	this.score = score;
+    }
+    
 	public void initGhosts() 
 	{
 	    ghost1.setY(9);
@@ -150,11 +162,7 @@ public class Model extends Observable implements Runnable
                 {
 	    		int X = pacman.getX()-1;
                         int Y = pacman.getY();
-	    		if (grid.SPG(X, Y))
-	    		{
-                            pacman.changeState(true);
-	    		    grid.setScore(grid.getScore() + 10);
-	    		}
+                        
 	    			
                     if (grid.collision(pacman,-1,0))
                     {
@@ -162,6 +170,7 @@ public class Model extends Observable implements Runnable
                         {
                         	pacman.setX(pacman.getX()-1);
                                 grid.ghostAt(pacman.getX(),pacman.getY()).resetGhost();
+                                grid.deletePGat(pacman.getX(),pacman.getY());
                         }
                         else 
                     	{
@@ -169,8 +178,20 @@ public class Model extends Observable implements Runnable
                     		grid.addPacman(pacman);
                     	}
                     }
-                    else 
-                    	pacman.setX(pacman.getX()-1);
+                    else if (grid.SPG(X, Y))
+	    		{
+                            pacman.changeState(true);
+                            pacman.setX(pacman.getX()-1);
+                            grid.deleteSPGat(pacman.getX(),pacman.getY());
+	    		    score += 10;
+	    		}
+                    else if(grid.PG(X, Y))
+                    {
+                        pacman.setX(pacman.getX()-1);
+                        grid.deletePGat(pacman.getX(),pacman.getY());
+                    }
+                    else pacman.setX(pacman.getX()-1);
+                    	
                 }                            
 	    		break;
 	    		
@@ -179,11 +200,7 @@ public class Model extends Observable implements Runnable
                 {
 	    		int X = pacman.getX()+1;
                         int Y = pacman.getY();
-	    		if (grid.SPG(X, Y))
-	    		{
-                            pacman.changeState(true);
-	    		    grid.setScore(grid.getScore() + 10);
-	    		}
+	    		
 	    			
                     if(grid.collision(pacman,1,0))
                     {
@@ -191,6 +208,7 @@ public class Model extends Observable implements Runnable
                         {
                             pacman.setX(pacman.getX()+1);
                             grid.ghostAt(pacman.getX(),pacman.getY()).resetGhost();
+                            grid.deletePGat(pacman.getX(),pacman.getY());
                         }
                         	
                         else
@@ -198,24 +216,39 @@ public class Model extends Observable implements Runnable
                     		pacman = new Pacman();
                     		grid.addPacman(pacman);
                     	}
+                        
                     }
-                    else 
-                    	pacman.setX(pacman.getX()+1);
+                    else if (grid.SPG(X, Y))
+	    		{
+                            pacman.changeState(true);
+                            pacman.setX(pacman.getX()+1);
+                            grid.deleteSPGat(pacman.getX(),pacman.getX());
+	    		    score += 10;
+	    		}
+                    else if (grid.PG(X, Y))
+                    {
+                        pacman.setX(pacman.getX()+1);
+                        grid.deletePGat(pacman.getX(),pacman.getY());
+                    }
+                    else pacman.setX(pacman.getX()+1);
+
                 }		
 	    		break;
 	    		
 	    	case gauche :
 	    		if (pacman.getX() == 9 && pacman.getY() == 0)
-	    			pacman.setY(26);
+                        {
+                            pacman.setY(26);
+                            grid.deletePGat(pacman.getX(),pacman.getY());
+                            
+                        }
+	    			
 	    		else if (!grid.getCell(pacman.getX(), pacman.getY()-1))
                 {
 	    		int X = pacman.getX();
                         int Y = pacman.getY()-1;
-	    		if (grid.SPG(X, Y))
-	    		{
-                            pacman.changeState(true);
-	    		    grid.setScore(grid.getScore() + 10);
-	    		}
+	    		
+	    		
 	    			
 	                if(grid.collision(pacman,0,-1))
 	                {
@@ -223,31 +256,44 @@ public class Model extends Observable implements Runnable
                             {
                                 pacman.setY(pacman.getY()-1);
                                 grid.ghostAt(pacman.getX(),pacman.getY()).resetGhost();
+                                grid.deletePGat(pacman.getX(),pacman.getY());
                             }
 	                    	
 	                    else
 	                    {
 	                		pacman = new Pacman();
 	                		grid.addPacman(pacman);
-	                	}
+	                    }
 	                }
-	                else 
-	                	pacman.setY(pacman.getY()-1);
+                        else if (grid.SPG(X, Y))
+	    		{
+                            pacman.changeState(true);
+                            pacman.setY(pacman.getY()-1);
+                            grid.deleteSPGat(pacman.getX(),pacman.getY());
+	    		    score += 10;
+	    		}
+                        else if (grid.PG(X, Y))
+                        {
+                            pacman.setY(pacman.getY()-1);
+                            grid.deletePGat(pacman.getX(),pacman.getY());
+                        }
+                        else pacman.setY(pacman.getY()-1);
+	                	
                 }
 	    		break;
 	    		
 	    	case droite :
 	    		if (pacman.getX() == 9 && pacman.getY() == 26)
-	    			pacman.setY(0);
+                        {
+                            pacman.setY(0);
+                            grid.deletePGat(pacman.getX(),pacman.getY());
+                        }
+	    			
 	    		else if (!grid.getCell(pacman.getX(), pacman.getY()+1))
                 {
 	    		int X = pacman.getX();
                         int Y = pacman.getY()+1;
-	    		if (grid.SPG(X, Y))
-	    		{
-                            pacman.changeState(true);
-	    		    grid.setScore(grid.getScore() + 10);
-	    		}
+	    		
 	    			
                     if(grid.collision(pacman,0,1))
                     {
@@ -255,6 +301,7 @@ public class Model extends Observable implements Runnable
                         {
                             pacman.setY(pacman.getY()+1);
                             grid.ghostAt(pacman.getX(),pacman.getY()).resetGhost();
+                            grid.deletePGat(pacman.getX(),pacman.getY());
                         }
                         	
                         else 
@@ -262,10 +309,23 @@ public class Model extends Observable implements Runnable
                     		pacman = new Pacman();
                     		grid.addPacman(pacman);
                                 
+                                
                     	}
                     }
-                    else 
-                    	pacman.setY(pacman.getY()+1);
+                    else if (grid.SPG(X, Y))
+	    		{
+                            pacman.changeState(true);
+                            pacman.setY(pacman.getY()+1);
+                            grid.deleteSPGat(pacman.getX(),pacman.getY());
+	    		    score += 10;
+	    		}
+                        else if (grid.PG(X, Y))
+                        {
+                            pacman.setY(pacman.getY()+1);
+                            grid.deletePGat(pacman.getX(),pacman.getY());
+                        }
+                        else pacman.setY(pacman.getY()+1);
+                    	
                 }	    			
 	    		break;
 	    		
@@ -444,7 +504,7 @@ public class Model extends Observable implements Runnable
         	
     		if(pacman.state())
     			c++;
-    		
+
     		setChanged(); 
         	notifyObservers(); // notification de l'observer
            

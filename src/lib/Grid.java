@@ -18,22 +18,23 @@ public class Grid {
 	private Scanner scan;
 	private Scanner scan2;
 	private File file;
-	
-	private int score = 0;
+
 	
     private Pacman pacman;
     private Vector<Ghost> ghosts;
     private Vector<SuperPacGomme> superPacgommes;
+    private Vector<PacGomme> Pacgommes;
 	
 	public Grid()
 	{
         ghosts = new Vector<Ghost>();
         superPacgommes = new Vector<SuperPacGomme>();
+        Pacgommes = new Vector<PacGomme>();
         superPacgommes.addElement(new SuperPacGomme(1,12));
         superPacgommes.addElement(new SuperPacGomme(17,1));
         superPacgommes.addElement(new SuperPacGomme(1,25));
         superPacgommes.addElement(new SuperPacGomme(17,25));
-        superPacgommes.addElement(new SuperPacGomme(15,13));
+        //superPacgommes.addElement(new SuperPacGomme(15,13));
             
 		try
 		{
@@ -62,10 +63,12 @@ public class Grid {
 					if (i == 1)
 					{
 						grid[indexL][indexC] = true;
+                                                
 					}
 					else if (i == 0)
 					{
 						grid[indexL][indexC] = false;
+                                                if(!SPG(indexL,indexC))Pacgommes.addElement(new PacGomme(indexL,indexC));
 					}
 					indexC++;
 				}
@@ -89,21 +92,45 @@ public class Grid {
 		return indexC;
 	}
 	
-	public int getScore()
-	{
-		return score;
-	}
-	
-	public void setScore(int score)
-	{
-		this.score = score;
-	}
 	
 	public boolean getCell(int i, int j)
 	{
 		return grid[i][j];
 	}
 	
+        public boolean SPGat(int i, int j)
+        {
+            for(int k=0; k<superPacgommes.size(); k++)
+                if(superPacgommes.elementAt(k).getX() == i && superPacgommes.elementAt(k).getY() == j)
+                    return false;
+            return true;
+        }
+        
+        public void deleteSPGat(int i, int j)
+        {
+            int index=0;
+            for (int k = 0; k < superPacgommes.size(); k++)
+            {
+    		if (superPacgommes.get(k).getX() == i && superPacgommes.get(k).getY() == j) index = k;
+	
+            }
+            //System.out.println(index);
+            superPacgommes.remove(index);
+            //System.out.println(superPacgommes.size());
+        }
+        
+        public void deletePGat(int i, int j)
+        {
+            int index=0;
+            for (int k = 0; k < Pacgommes.size(); k++)
+            {
+    		if (Pacgommes.get(k).getX() == i && Pacgommes.get(k).getY() == j) index = k;
+	
+            }
+            
+            Pacgommes.remove(index);
+        }
+        
 	public void possibilite(Ghost ghost)
     {
 		boolean[] dummy = new boolean[4];
@@ -202,7 +229,19 @@ public class Grid {
     {
     	for (int k = 0; k < superPacgommes.size(); k++)
     	{
-    		if (superPacgommes.get(k).getX() == i && superPacgommes.get(k).getY() == j) 
+    		if (superPacgommes.get(k).getX() == i && superPacgommes.get(k).getY() == j)
+                    return true;
+	
+    	}
+    	return false;
+    }
+    
+    
+    public boolean PG(int i, int j)
+    {
+    	for (int k = 0; k < Pacgommes.size(); k++)
+    	{
+    		if (Pacgommes.get(k).getX() == i && Pacgommes.get(k).getY() == j) 
     			return true;
     	}
     	return false;

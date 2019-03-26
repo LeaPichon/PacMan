@@ -5,10 +5,10 @@ public class PacGomme
 	private int x;
 	private int y;
 	
-	public void PacGomme()
+	public PacGomme(int x, int y)
 	{
-		x = 0;
-		y = 0;
+		this.x = x;
+		this.y = y;
 	}
 
 	public int getX() 

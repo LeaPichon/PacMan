@@ -17,7 +17,7 @@ import lib.Grid;
 
 public class Vue extends Application 
 {
-	private Grid grid;
+	private Model model;
 	
     public Vue() { }
     
@@ -30,7 +30,7 @@ public class Vue extends Application
     	StackPane stackpane = new StackPane();
     	
     	//initialisation du modle
-    	Model model = new Model();
+    	model = new Model();
     	
     	//pr�paration des images    	
     	Image wall = new Image("images/wall.png");
@@ -50,15 +50,14 @@ public class Vue extends Application
     	stackpane.getChildren().add(imgscore);
     	
     	//initialisaton de la grille et des tableaux
-    	grid = new Grid();
     	GridPane gridpane = new GridPane();
-    	ImageView[][] tabIV = new ImageView[grid.getIndexL()][grid.getIndexC()];
-    	int[][] tabEmpty = new int[grid.getIndexL()][grid.getIndexC()];
-    	for(int i = 0; i < grid.getIndexL(); i++)
+    	ImageView[][] tabIV = new ImageView[model.grid.getIndexL()][model.grid.getIndexC()];
+    	int[][] tabEmpty = new int[model.grid.getIndexL()][model.grid.getIndexC()];
+    	for(int i = 0; i < model.grid.getIndexL(); i++)
     	{
-    		for(int j = 0; j < grid.getIndexC(); j++)
+    		for(int j = 0; j < model.grid.getIndexC(); j++)
     		{
-    			if (grid.getCell(i, j))
+    			if (model.grid.getCell(i, j))
     			{
     				ImageView imgWall = new ImageView(wall);
     				imgWall.setFitHeight(30);
@@ -83,22 +82,22 @@ public class Vue extends Application
 	        @Override
 	        public void update(Observable obs, Object arg) 
 	        {
-	            for (int i = 0; i < grid.getIndexL(); i++) // rafraichissement graphique
+	            for (int i = 0; i < model.grid.getIndexL(); i++) // rafraichissement graphique
 	            { 
-	                for (int j = 0; j < grid.getIndexC(); j++) 
+	                for (int j = 0; j < model.grid.getIndexC(); j++) 
 	                {
-	                	if(grid.getCell(i, j) == true)
+	                	if(model.grid.getCell(i, j) == true)
 	        		    	tabIV[i][j].setImage(wall);
-	                	else if (tabEmpty[i][j] == 1)
-	                		tabIV[i][j].setImage(empty);
-	                	else if (grid.SPG(i,j))
-                        {
-                            tabIV[i][j].setImage(superpacgomme);
-                            //System.out.println(grid.SPG(i,j) + "i = " + i + "j = " + j );
-                        }
-	                	else
-	                		tabIV[i][j].setImage(pacgomme);
 	                	
+	                	else if (model.grid.SPG(i,j))
+                                {
+                                    tabIV[i][j].setImage(superpacgomme);
+                                    //System.out.println(model.grid.SPG(i,j) + "i = " + i + "j = " + j );
+                                }
+                                else if(model.grid.PG(i,j))
+	                		tabIV[i][j].setImage(pacgomme);
+	                	else
+                                    tabIV[i][j].setImage(empty);
 	                	if(model.getPX() == i && model.getPY() == j)
 	                	{
 	                		tabIV[i][j].setImage(pacman);
@@ -132,7 +131,7 @@ public class Vue extends Application
 	    model.addObserver(obs);
 	    model.start();
 	    root.add(stackpane, 0, 0);
-	    root.add(gridpane, 0, 1);
+	    root.add(gridpane, 0, 2);
 	    
 	    stage.setScene(scene);
 	    stage.show();
