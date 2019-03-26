@@ -148,17 +148,21 @@ public class Model extends Observable implements Runnable
 	    	case haut :
 	    		if (!grid.getCell(pacman.getX()-1, pacman.getY()))
                 {
-	    			for (int i = 0; i < 4; i++)
-	    				if (getPX() == grid.getSPG(i).getX() && getPY() == grid.getSPG(i).getY())
-	    				{
-	    					pacman.changeState(true);
-	    					grid.setScore(grid.getScore() + 10);
-	    				}
+	    		int X = pacman.getX()-1;
+                        int Y = pacman.getY();
+	    		if (grid.SPG(X, Y))
+	    		{
+                            pacman.changeState(true);
+	    		    grid.setScore(grid.getScore() + 10);
+	    		}
 	    			
                     if (grid.collision(pacman,-1,0))
                     {
                         if (pacman.state()) 
+                        {
                         	pacman.setX(pacman.getX()-1);
+                                grid.ghostAt(pacman.getX(),pacman.getY()).resetGhost();
+                        }
                         else 
                     	{
                     		pacman = new Pacman();
@@ -173,17 +177,22 @@ public class Model extends Observable implements Runnable
 	    	case bas :
 	    		if (!grid.getCell(pacman.getX()+1, pacman.getY()))
                 {
-	    			for (int i = 0; i < 4; i++)
-	    				if (getPX() == grid.getSPG(i).getX() && getPY() == grid.getSPG(i).getY())
-	    				{
-	    					pacman.changeState(true);
-	    					grid.setScore(grid.getScore() + 10);
-	    				}
+	    		int X = pacman.getX()+1;
+                        int Y = pacman.getY();
+	    		if (grid.SPG(X, Y))
+	    		{
+                            pacman.changeState(true);
+	    		    grid.setScore(grid.getScore() + 10);
+	    		}
 	    			
                     if(grid.collision(pacman,1,0))
                     {
                         if(pacman.state()) 
-                        	pacman.setX(pacman.getX()+1);
+                        {
+                            pacman.setX(pacman.getX()+1);
+                            grid.ghostAt(pacman.getX(),pacman.getY()).resetGhost();
+                        }
+                        	
                         else
                         {
                     		pacman = new Pacman();
@@ -200,17 +209,22 @@ public class Model extends Observable implements Runnable
 	    			pacman.setY(26);
 	    		else if (!grid.getCell(pacman.getX(), pacman.getY()-1))
                 {
-	    			for (int i = 0; i < 4; i++)
-	    				if (getPX() == grid.getSPG(i).getX() && getPY() == grid.getSPG(i).getY())
-	    				{
-	    					pacman.changeState(true);
-	    					grid.setScore(grid.getScore() + 10);
-	    				}
+	    		int X = pacman.getX();
+                        int Y = pacman.getY()-1;
+	    		if (grid.SPG(X, Y))
+	    		{
+                            pacman.changeState(true);
+	    		    grid.setScore(grid.getScore() + 10);
+	    		}
 	    			
 	                if(grid.collision(pacman,0,-1))
 	                {
-	                    if(pacman.state()) 
-	                    	pacman.setY(pacman.getY()-1);
+	                    if(pacman.state())
+                            {
+                                pacman.setY(pacman.getY()-1);
+                                grid.ghostAt(pacman.getX(),pacman.getY()).resetGhost();
+                            }
+	                    	
 	                    else
 	                    {
 	                		pacman = new Pacman();
@@ -227,21 +241,27 @@ public class Model extends Observable implements Runnable
 	    			pacman.setY(0);
 	    		else if (!grid.getCell(pacman.getX(), pacman.getY()+1))
                 {
-	    			for (int i = 0; i < 4; i++)
-	    				if (getPX() == grid.getSPG(i).getX() && getPY() == grid.getSPG(i).getY())
-	    				{
-	    					pacman.changeState(true);
-	    					grid.setScore(grid.getScore() + 10);
-	    				}
+	    		int X = pacman.getX();
+                        int Y = pacman.getY()+1;
+	    		if (grid.SPG(X, Y))
+	    		{
+                            pacman.changeState(true);
+	    		    grid.setScore(grid.getScore() + 10);
+	    		}
 	    			
                     if(grid.collision(pacman,0,1))
                     {
-                        if(pacman.state()) 
-                        	pacman.setY(pacman.getY()+1);
+                        if(pacman.state())
+                        {
+                            pacman.setY(pacman.getY()+1);
+                            grid.ghostAt(pacman.getX(),pacman.getY()).resetGhost();
+                        }
+                        	
                         else 
                         {
                     		pacman = new Pacman();
                     		grid.addPacman(pacman);
+                                
                     	}
                     }
                     else 
@@ -272,7 +292,6 @@ public class Model extends Observable implements Runnable
                         {
                         	pacman.setX(pacman.getX()-1);
                         	ghost.resetGhost();
-                        	System.out.println("prout");
                         }
                         else
                         {
@@ -295,7 +314,6 @@ public class Model extends Observable implements Runnable
                         {
                         	pacman.setX(pacman.getX()+1);
                         	ghost.resetGhost();
-                        	System.out.println("prout");
                         }
                         else
                         {
@@ -319,7 +337,6 @@ public class Model extends Observable implements Runnable
                         {
                         	pacman.setY(pacman.getY()-1);
                         	ghost.resetGhost();
-                        	System.out.println("prout");
                         }
                         else
                         {
@@ -343,7 +360,6 @@ public class Model extends Observable implements Runnable
                         {
                         	pacman.setY(pacman.getY()+1);
                         	ghost.resetGhost();
-                        	System.out.println("prout");
                         }
                         else
                         {

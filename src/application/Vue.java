@@ -5,6 +5,7 @@ import java.util.Observer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -28,7 +29,7 @@ public class Vue extends Application
     	Scene scene = new Scene(root, 810, 680, Color.WHITE);
     	StackPane stackpane = new StackPane();
     	
-    	//initialisation du modèle
+    	//initialisation du modle
     	Model model = new Model();
     	
     	//prï¿½paration des images    	
@@ -42,7 +43,7 @@ public class Vue extends Application
     	Image pacgomme = new Image("images/pacgomme.png");
     	Image superpacgomme = new Image("images/superpacgomme.png");
     	Image ghostSPG = new Image("images/ghostSPG.png");
-    	Image score = new Image("images/score.png");
+        Image score = new Image("images/score.png");
     	
     	ImageView imgscore = new ImageView(score);
     	

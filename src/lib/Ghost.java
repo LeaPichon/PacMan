@@ -51,7 +51,7 @@ public class Ghost extends Entity
 	
 	public void resetGhost()
 	{
-		setX(7);
+		setX(9);
 		setY(13);
 	}
 	

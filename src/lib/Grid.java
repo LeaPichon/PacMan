@@ -212,4 +212,14 @@ public class Grid {
     {
     	return superPacgommes.get(i);
     }
+    
+    public Ghost ghostAt(int i, int j)
+    {
+        for(int k=0; k<ghosts.size(); k++)
+        {
+            if(ghosts.elementAt(k).getX() == i && ghosts.elementAt(k).getY() == j)
+                return ghosts.elementAt(k);
+        }
+        return null;
+    }
 }
