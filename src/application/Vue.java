@@ -88,9 +88,13 @@ public class Vue extends Application
 	                	else if (tabEmpty[i][j] == 1)
 	                		tabIV[i][j].setImage(empty);
 	                	else if (grid.SPG(i,j))
-	        				tabIV[i][j].setImage(superpacgomme);
+                                {
+                                    tabIV[i][j].setImage(superpacgomme);
+                                        System.out.println(grid.SPG(i,j) + "i = " + i + "j = " + j );
+                                }
+	        			
 	                	else
-	        				tabIV[i][j].setImage(pacgomme);
+	        			tabIV[i][j].setImage(pacgomme);
 	                	
 	                	if(model.getPX() == i && model.getPY() == j)
 	                	{

@@ -27,10 +27,11 @@ public class Grid {
 	{
         ghosts = new Vector<Ghost>();
         superPacgommes = new Vector<SuperPacGomme>();
-        superPacgommes.addElement(new SuperPacGomme(3,1));
-        superPacgommes.addElement(new SuperPacGomme(3,25));
-        superPacgommes.addElement(new SuperPacGomme(14,1));
-        superPacgommes.addElement(new SuperPacGomme(14,25));
+        superPacgommes.addElement(new SuperPacGomme(1,12));
+        superPacgommes.addElement(new SuperPacGomme(17,1));
+        superPacgommes.addElement(new SuperPacGomme(1,25));
+        superPacgommes.addElement(new SuperPacGomme(17,25));
+        superPacgommes.addElement(new SuperPacGomme(15,13));
             
 		try
 		{
@@ -189,7 +190,7 @@ public class Grid {
     
     public boolean SPG(int i, int j)
     {
-    	for (int k = 0; i < 4; i++)
+    	for (int k = 0; k < superPacgommes.size(); k++)
     	{
     		if (superPacgommes.get(k).getX() == i && superPacgommes.get(k).getY() == j) 
     			return true;
