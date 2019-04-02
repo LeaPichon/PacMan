@@ -476,7 +476,7 @@ public class Model extends Observable implements Runnable
     	int comptSP = 0;
     	
         //this.initGhosts();
-        while(true) 
+        while(!getWin()) 
         {
         	if (comptSP == 30)
         	{
@@ -509,6 +509,30 @@ public class Model extends Observable implements Runnable
     		if(pacman.state())
     			comptSP++;
 
+    		this.isWon();  
+			/*
+			  if(getWin()) //temporaire fin de partie
+			 
+			{
+				pacman = new Pacman();
+		        grid = new Grid();
+		        
+		        lastdir = Direction.debut;
+		        ghost1 = new Ghost(grid,9,9);
+		        ghost2 = new Ghost(grid,11,12);
+		        ghost3 = new Ghost(grid,7,14);
+		        ghost4 = new Ghost(grid,9,17);
+		        
+		        grid.addPacman(pacman);
+		        
+		        grid.addEntities(ghost1);
+		        grid.addEntities(ghost2);
+		        grid.addEntities(ghost3);
+		        grid.addEntities(ghost4);
+		        
+			}
+			*/
+    		
     		setChanged(); 
         	notifyObservers(); // notification de l'observer
            

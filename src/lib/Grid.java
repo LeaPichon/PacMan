@@ -63,7 +63,8 @@ public class Grid {
 					else if (i == 0)
 					{
 						grid[indexL][indexC] = false;
-                                                if(!SPG(indexL,indexC))Pacgommes.addElement(new PacGomme(indexL,indexC));
+						if(!SPG(indexL,indexC))
+							Pacgommes.addElement(new PacGomme(indexL,indexC));
 					}
 					indexC++;
 				}
