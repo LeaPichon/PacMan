@@ -2,7 +2,7 @@ package lib;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.Vector;
+import java.util.Vector; 
 
 public class Grid {
 	
@@ -63,8 +63,8 @@ public class Grid {
 					else if (i == 0)
 					{
 						grid[indexL][indexC] = false;
-						if(!SPG(indexL,indexC))
-							Pacgommes.addElement(new PacGomme(indexL,indexC));
+                                                if(!SPG(indexL,indexC))
+                                                    Pacgommes.addElement(new PacGomme(indexL,indexC));
 					}
 					indexC++;
 				}
